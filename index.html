@@ -1,48 +1,59 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mein Portfolio</title>
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
   <!-- Navigation -->
-  <nav>
-    <button class="nav-btn" data-id="willkommen">Willkommen</button>
-    <button class="nav-btn" data-id="ueber-mich">Über mich</button>
-    <button class="nav-btn" data-id="projekte">Meine Projekte</button>
-    <button class="nav-btn" data-id="zukunft">Meine Zukunft</button>
-    <button class="nav-btn" data-id="kontakt">Kontaktiere mich</button>
+  <nav role="navigation">
+    <ul>
+      <li><a href="#willkommen" class="nav-link">Willkommen</a></li>
+      <li><a href="#ueber-mich" class="nav-link">Über mich</a></li>
+      <li><a href="#projekte" class="nav-link">Meine Projekte</a></li>
+      <li><a href="#zukunft" class="nav-link">Meine Zukunft</a></li>
+      <li><a href="#kontakt" class="nav-link">Kontaktiere mich</a></li>
+    </ul>
   </nav>
 
   <!-- Inhalt -->
   <main>
-    <section id="willkommen" class="section" style="display: block;">
-      <h1>Willkommen</h1>
-      <p>Herzlich willkommen auf meiner Portfolio-Seite!</p>
+    <section id="willkommen" hidden>
+  <p>Willkommen auf meiner Website von:</p>
+  <h1>Hristian Petrov</h1>
+  <h2>Wirtschaftsinformatik-Student, BFH</h2>
+  <p>Ich interessiere mich für Webdesign, IT-Projekte und Prozessoptimierung.</p>
+  <p>Schön, dass du hier bist – entdecke mein Leben.</p>
+  <div class="hero-actions">
+        <button class="scroll-down" aria-label="Über mich" onclick="history.pushState(null, '', '#ueber-mich'); showSectionByHash();">Über mich</button>
+      </div>
     </section>
 
-    <section id="ueber-mich" class="section" style="display: none;">
+    <section id="ueber-mich" hidden>
       <h1>Über mich</h1>
       <p>Hier erzähle ich etwas über mich.</p>
     </section>
 
-    <section id="projekte" class="section" style="display: none;">
+    <section id="projekte" hidden>
       <h1>Meine Projekte</h1>
       <p>Hier findest du meine bisherigen Arbeiten.</p>
     </section>
 
-    <section id="zukunft" class="section" style="display: none;">
+    <section id="zukunft" hidden>
       <h1>Meine Zukunft</h1>
       <p>Hier stehen meine Ziele und Pläne.</p>
     </section>
 
-    <section id="kontakt" class="section" style="display: none;">
+    <section id="kontakt" hidden>
       <h1>Kontaktiere mich</h1>
       <p>So kannst du mich erreichen.</p>
     </section>
   </main>
 
-  <script src="assets/scripts/main.js"></script>
+  <script src="assets/scripts/main.js" defer></script>
 </body>
 </html>

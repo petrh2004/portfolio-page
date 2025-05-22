@@ -1,51 +1,36 @@
-const buttons = document.querySelectorAll('.nav-btn');
-const sections = document.querySelectorAll('.section');
+const links = document.querySelectorAll('.nav-link');
+const sections = document.querySelectorAll('main section');
 
-// Funktion zum Anzeigen der gewünschten Section
-function showSection(id) {
+/** Anzeigen der passenden Section anhand des Hash **/
+function showSectionByHash() {
+  const id = window.location.hash.substring(1) || 'willkommen';
+  const validIds = Array.from(sections).map(sec => sec.id);
+  const targetId = validIds.includes(id) ? id : 'willkommen';
+
   sections.forEach(section => {
-    section.style.display = 'none';
+    section.hidden = section.id !== targetId;
   });
-
-  const target = document.getElementById(id);
-  if (target) {
-    target.style.display = 'block';
-  }
-
-  // Aktiven Button markieren
-  buttons.forEach(btn => {
-    if (btn.dataset.id === id) {
-      btn.classList.add('active');
-    } else {
-      btn.classList.remove('active');
-    }
+  links.forEach(link => {
+    const isActive = link.getAttribute('href') === `#${targetId}`;
+    link.classList.toggle('active', isActive);
+    if (isActive) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
   });
 }
 
-// Event Listener für die Navigation
-buttons.forEach(button => {
-  button.addEventListener('click', () => {
-    const targetId = button.dataset.id;
+// Initiale Anzeige
+window.addEventListener('DOMContentLoaded', showSectionByHash);
+// Auf Hash-Änderungen reagieren (Back/Forward)
+window.addEventListener('hashchange', showSectionByHash);
 
-    // URL-Hash aktualisieren
-    window.location.hash = targetId;
-
-    // Section anzeigen
-    showSection(targetId);
+// Klick auf Links verhindern Sprung und Hash setzen (für sanftes Wechseln)
+links.forEach(link => {
+  link.addEventListener('click', event => {
+    event.preventDefault();
+    const targetHash = link.getAttribute('href');
+    if (window.location.hash !== targetHash) {
+      history.pushState(null, '', targetHash);
+      showSectionByHash();
+    }
   });
-});
-
-// Beim Laden der Seite die passende Section anzeigen
-window.addEventListener('DOMContentLoaded', () => {
-  let hash = window.location.hash.substring(1); // z. B. "kontakt"
-
-  // Wenn kein Hash vorhanden ist → Standard auf #willkommen
-  if (!hash) {
-    window.location.hash = 'willkommen';
-    hash = 'willkommen';
-  }
-
-  const validIds = Array.from(sections).map(sec => sec.id);
-  const initialId = validIds.includes(hash) ? hash : 'willkommen';
-  showSection(initialId);
 });
