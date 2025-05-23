@@ -6,6 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mein Portfolio</title>
   <link rel="stylesheet" href="assets/css/style.css">
+  <style>
+    /* Nur Kanisterränder im Über mich Bereich visualisieren */
+    .about-item {
+      border: 2px dashed #888;
+      padding: 10px;
+      min-height: 100px;
+    }
+    .timeline-btn.active {
+      border-color: #007acc;
+      background: #007acc;
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
 
@@ -23,19 +36,69 @@
   <!-- Inhalt -->
   <main>
     <section id="willkommen" hidden>
-  <p>Willkommen auf meiner Website von:</p>
-  <h1>Hristian Petrov</h1>
-  <h2>Wirtschaftsinformatik-Student, BFH</h2>
-  <p>Ich interessiere mich für Webdesign, IT-Projekte und Prozessoptimierung.</p>
-  <p>Schön, dass du hier bist – entdecke mein Leben.</p>
-  <div class="hero-actions">
+      <p>Willkommen auf meiner Website von:</p>
+      <h1>Hristian Petrov</h1>
+      <h2>Wirtschaftsinformatik-Student, BFH</h2>
+      <p>Ich interessiere mich für Webdesign, IT-Projekte und Prozessoptimierung.</p>
+      <p>Schön, dass du hier bist – entdecke mein Leben.</p>
+      <div class="hero-actions">
         <button class="scroll-down" aria-label="Über mich" onclick="history.pushState(null, '', '#ueber-mich'); showSectionByHash();">Über mich</button>
       </div>
     </section>
 
     <section id="ueber-mich" hidden>
       <h1>Über mich</h1>
-      <p>Hier erzähle ich etwas über mich.</p>
+      <div class="about-grid">
+        <!-- Persönliche Daten -->
+        <div class="about-item" id="about-personal">
+          <h2 class="item-title">Informationen</h2>
+          <p>Mein Name ist Hristian Petrov. Ich bin 21 Jahre alt und lebe seit meiner Geburt in Bern-Bümpliz.</p>
+          <p>Nach der Oberstufe absolvierte ich eine Ausbildung zum Kaufmann EFZ (E-Profil) an der Wirtschafts- und Kaderschule WKS Bern und sammelte parallel Praxiserfahrung bei den Reformierten Kirchen Bern-Jura-Solothurn. Anschliessend erlangte ich die Berufsmaturität Typ Wirtschaft an derselben Schule.</p>
+          <p>Aktuell studiere ich Wirtschaftsinformatik an der Berner Fachhochschule BFH und bin zudem Teilinhaber der Auto Schmitten GmbH.</p>
+          <p class="small-note">P.S.: Die Reformierten Kirchen Bern-Jura-Solothurn sind keine Kirche im klassischen Sinn, sondern eine NGO, die als Auskunftsstelle fungiert, den Kirchensteuernanteil der reformierten Kirchen verwaltet und gleichzeitig als Hilfsorganisation sowie Partnerin zahlreicher weiterer Organisationen tätig ist.</p>
+        </div>
+        <!-- Sprachkenntnisse -->
+        <div class="about-item" id="about-education">
+          <h2 class="item-title">Sprachkenntnisse</h2>
+          <ul class="language-list">
+            <li>Deutsch | Muttersprache</li>
+            <li>Mazedonisch | Muttersprache</li>
+            <li>Französisch | Fortgeschritten</li>
+            <li>Englisch | Fortgeschritten</li>
+          </ul>
+        </div>
+        <!-- IT-Kenntnisse -->
+        <div class="about-item" id="about-skills">
+          <h2 class="item-title">IT-Kenntnisse</h2>
+          <ul class="it-skills-list">
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+            <li>Python</li>
+            <li>TypeScript</li>
+            <li>Figma</li>
+          </ul>
+        </div>
+        <!-- Werdegang-Auswahl -->
+        <div class="about-item" id="about-contact">
+          <h2 class="item-title">Werdegang</h2>
+          <div class="timeline-controls">
+            <button class="timeline-btn active" data-step="school">Schulischer Werdegang</button>
+            <button class="timeline-btn" data-step="career">Beruflicher Werdegang</button>
+          </div>
+          <div class="timeline-content">
+            <ul class="timeline-list timeline-school">
+              <li>Sep 2023 – heute: Bachelor of Science in Wirtschaftsinformatik, Berner Fachhochschule BFH, Bern, Schweiz</li>
+              <li>Aug 2022 – Jul 2023: Berufsmaturität Wirtschaft, Wirtschafts- und Kaderschule WKS Bern, Bern, Schweiz</li>
+              <li>Aug 2019 – Jul 2022: Kaufmann EFZ (E-Profil), Wirtschafts- und Kaderschule WKS Bern, Bern, Schweiz</li>
+            </ul>
+            <ul class="timeline-list timeline-career" style="display: none;">
+              <li>Aug 2019 – Jul 2022: Kaufmann EFZ, Reformierte Kirchen Bern-Jura-Solothurn, Bern, Schweiz</li>
+              <li>Jan 2025 – heute: Teilinhaber, Auto Schmitten GmbH, Schmitten, Fribourg, Schweiz</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section id="projekte" hidden>

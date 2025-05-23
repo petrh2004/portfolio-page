@@ -1,5 +1,6 @@
 const links = document.querySelectorAll('.nav-link');
 const sections = document.querySelectorAll('main section');
+const timelineBtns = document.querySelectorAll('#about-contact .timeline-btn');
 
 /** Anzeigen der passenden Section anhand des Hash **/
 function showSectionByHash() {
@@ -16,6 +17,15 @@ function showSectionByHash() {
     if (isActive) link.setAttribute('aria-current', 'page');
     else link.removeAttribute('aria-current');
   });
+
+  // Default: Schulischer Werdegang aktiv auf Über-mich
+  if (targetId === 'ueber-mich') {
+    timelineBtns.forEach((btn, idx) => {
+      btn.classList.toggle('active', idx === 0);
+    });
+  } else {
+    timelineBtns.forEach(btn => btn.classList.remove('active'));
+  }
 }
 
 // Initiale Anzeige
@@ -32,5 +42,17 @@ links.forEach(link => {
       history.pushState(null, '', targetHash);
       showSectionByHash();
     }
+  });
+});
+
+// Manuelle Aktivierung der Timeline-Buttons mit Anzeige-Logik
+timelineBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const step = btn.dataset.step;
+    // Aktive Klasse setzen
+    timelineBtns.forEach(b => b.classList.toggle('active', b === btn));
+    // Listen anzeigen/verstecken
+    document.querySelector('.timeline-school').style.display = step === 'school' ? 'block' : 'none';
+    document.querySelector('.timeline-career').style.display = step === 'career' ? 'block' : 'none';
   });
 });
