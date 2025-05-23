@@ -52,7 +52,8 @@ timelineBtns.forEach(btn => {
     // Aktive Klasse setzen
     timelineBtns.forEach(b => b.classList.toggle('active', b === btn));
     // Listen anzeigen/verstecken
-    document.querySelector('.timeline-school').style.display = step === 'school' ? 'block' : 'none';
-    document.querySelector('.timeline-career').style.display = step === 'career' ? 'block' : 'none';
+    // Listen anzeigen/verstecken mit hidden
+    document.querySelector('.timeline-school').hidden = step !== 'school';
+    document.querySelector('.timeline-career').hidden = step !== 'career';
   });
 });
