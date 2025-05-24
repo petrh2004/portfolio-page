@@ -1,0 +1,257 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+/* =========================
+   Farbvariablen je nach Theme
+   ========================= */
+:root[data-theme='light'] {
+  --background: #f7f7f7;
+  --text: #232323;
+  --accent: #a67f4e;
+  --underline-hover: #232323;
+}
+
+:root[data-theme='dark'] {
+  --background: #181818;
+  --text: #fafafa;
+  --accent: #a67f4e;
+  --underline-hover: #fafafa;
+}
+
+/* =========================
+   Global Styles
+   ========================= */
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--text);
+  font-family: 'Inter', Arial, sans-serif;
+  transition: background 0.6s, color 0.6s;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* =========================
+   Icons
+   ========================= */
+.nav-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  opacity: 0.6;
+  transition: filter 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
+}
+
+:root[data-theme='dark'] .nav-icon {
+  filter: brightness(0) invert(1);
+}
+
+:root[data-theme='light'] .nav-icon {
+  filter: none;
+}
+
+/* =========================
+   Text neben Icon
+   ========================= */
+.nav-text {
+  flex-grow: 1;
+  white-space: nowrap;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* =========================
+   Menü-Knopf & Theme-Toggle
+   ========================= */
+#menu-toggle,
+#theme-toggle {
+  position: fixed;
+  top: 1.3rem;
+  z-index: 2000;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(6px);
+  border: none;
+  border-radius: 10px;
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+#menu-toggle {
+  left: 1.5rem;
+}
+
+#theme-toggle {
+  left: 4.5rem;
+}
+
+#menu-toggle:hover,
+#theme-toggle:hover {
+  background: rgba(255,255,255,0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+#menu-toggle img,
+#theme-toggle img {
+  width: 28px;
+  height: 28px;
+}
+
+/* =========================
+   Glass-Nav-Container – volle Höhe
+   ========================= */
+.nav-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 240px;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+  padding: 6rem 1rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 1500;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.nav-container.hidden {
+  transform: translateX(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* =========================
+   Navigation
+   ========================= */
+.nav-container nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.nav-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: var(--text);
+  transition: color 0.3s ease;
+}
+
+/* Unterstrich bei Hover */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  bottom: 0.2rem;
+  width: 0%;
+  height: 2px;
+  background-color: var(--underline-hover);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: calc(100% - 2rem);
+}
+
+/* Kein Kasten beim Hover */
+.nav-link:hover:not(.active) {
+  background-color: transparent;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Icon-Effekt bei Hover */
+.nav-link:hover .nav-icon {
+  opacity: 1;
+}
+
+/* =========================
+   Aktiver Link
+   ========================= */
+.nav-link.active {
+  font-weight: bold;
+  color: var(--text);
+  pointer-events: none;
+  cursor: default;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+/* Aktiver Text farbig */
+.nav-link.active .nav-text {
+  color: var(--accent);
+}
+
+/* Kein Farbeffekt beim Hover für Text */
+.nav-link:hover .nav-text {
+  color: var(--text);
+}
+
+/* Aktives Icon hervorgehoben */
+.nav-link.active .nav-icon {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+/* Im Dark Mode: aktives Icon nicht invertieren */
+:root[data-theme='dark'] .nav-link.active .nav-icon {
+  filter: none;
+}
+
+/* Hover soll Icon nicht skalieren */
+.nav-link:hover .nav-icon {
+  transform: none;
+}
+
+/* =========================
+   Hauptbereich
+   ========================= */
+main {
+  margin-left: 0;
+  padding: 2rem;
+}
+
+/* =========================
+   Mobile responsive behavior
+   ========================= */
+@media (max-width: 768px) {
+  .nav-container {
+    left: auto;
+    right: 0;
+    width: 80%;
+    max-width: 320px;
+    transform: translateX(100%);
+    padding-top: 4rem;
+  }
+
+  .nav-container:not(.hidden) {
+    transform: translateX(0);
+  }
+
+  main {
+    margin-left: 0;
+    padding: 1.5rem;
+  }
+
+  #menu-toggle {
+    top: 1rem;
+    right: 1rem;
+    left: auto;
+  }
+
+  #theme-toggle {
+    top: 1rem;
+    right: 4.5rem;
+    left: auto;
+  }
+}

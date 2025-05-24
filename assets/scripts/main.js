@@ -1,59 +1,90 @@
 const links = document.querySelectorAll('.nav-link');
 const sections = document.querySelectorAll('main section');
-const timelineBtns = document.querySelectorAll('#about-contact .timeline-btn');
+const menuToggle = document.getElementById('menu-toggle');
+const navContainer = document.getElementById('nav-container');
+const themeToggle = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
 
-/** Anzeigen der passenden Section anhand des Hash **/
+// =============================
+// Menü öffnen/schliessen
+// =============================
+menuToggle.addEventListener('click', (e) => {
+  e.stopPropagation();
+  navContainer.classList.toggle('hidden');
+  menuToggle.setAttribute('aria-expanded', !navContainer.classList.contains('hidden'));
+});
+
+// Klick außerhalb schliesst Menü
+document.addEventListener('click', (e) => {
+  if (!navContainer.contains(e.target) && !menuToggle.contains(e.target)) {
+    navContainer.classList.add('hidden');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }
+});
+
+// Klick auf Link schliesst Menü
+links.forEach(link => {
+  link.addEventListener('click', () => {
+    navContainer.classList.add('hidden');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  });
+});
+
+// =============================
+// Hashbasierte Navigation mit Icon-Wechsel
+// =============================
 function showSectionByHash() {
   const id = window.location.hash.substring(1) || 'willkommen';
   const validIds = Array.from(sections).map(sec => sec.id);
   const targetId = validIds.includes(id) ? id : 'willkommen';
 
+  // Sections ein-/ausblenden
   sections.forEach(section => {
     section.hidden = section.id !== targetId;
   });
+
+  // Navigation Links aktivieren & Icons wechseln
   links.forEach(link => {
     const isActive = link.getAttribute('href') === `#${targetId}`;
     link.classList.toggle('active', isActive);
-    if (isActive) link.setAttribute('aria-current', 'page');
-    else link.removeAttribute('aria-current');
-  });
+    link.setAttribute('aria-current', isActive ? 'page' : '');
 
-  // Default: Schulischer Werdegang aktiv auf Über-mich
-  if (targetId === 'ueber-mich') {
-    timelineBtns.forEach((btn, idx) => {
-      btn.classList.toggle('active', idx === 0);
-    });
+    const icon = link.querySelector('img');
+    if (icon && icon.dataset.default && icon.dataset.active) {
+      icon.src = isActive ? icon.dataset.active : icon.dataset.default;
+    }
+  });
+}
+
+window.addEventListener('DOMContentLoaded', showSectionByHash);
+window.addEventListener('hashchange', showSectionByHash);
+
+// =============================
+// DARK/LIGHT MODE Umschalter
+// =============================
+function setTheme(mode) {
+  if (mode === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    themeIcon.src = 'assets/images/moon.png';
+    localStorage.setItem('theme', 'dark');
   } else {
-    timelineBtns.forEach(btn => btn.classList.remove('active'));
+    document.documentElement.setAttribute('data-theme', 'light');
+    themeIcon.src = 'assets/images/sun.png';
+    localStorage.setItem('theme', 'light');
   }
 }
 
-// Initiale Anzeige
-window.addEventListener('DOMContentLoaded', showSectionByHash);
-// Auf Hash-Änderungen reagieren (Back/Forward)
-window.addEventListener('hashchange', showSectionByHash);
+// Initiales Theme setzen
+const storedTheme = localStorage.getItem('theme');
+if (storedTheme) {
+  setTheme(storedTheme);
+} else {
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  setTheme(prefersDark ? 'dark' : 'light');
+}
 
-// Klick auf Links verhindern Sprung und Hash setzen (für sanftes Wechseln)
-links.forEach(link => {
-  link.addEventListener('click', event => {
-    event.preventDefault();
-    const targetHash = link.getAttribute('href');
-    if (window.location.hash !== targetHash) {
-      history.pushState(null, '', targetHash);
-      showSectionByHash();
-    }
-  });
-});
-
-// Manuelle Aktivierung der Timeline-Buttons mit Anzeige-Logik
-timelineBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const step = btn.dataset.step;
-    // Aktive Klasse setzen
-    timelineBtns.forEach(b => b.classList.toggle('active', b === btn));
-    // Listen anzeigen/verstecken
-    // Listen anzeigen/verstecken mit hidden
-    document.querySelector('.timeline-school').hidden = step !== 'school';
-    document.querySelector('.timeline-career').hidden = step !== 'career';
-  });
+// Theme Toggle-Button
+themeToggle.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme');
+  setTheme(current === 'dark' ? 'light' : 'dark');
 });
