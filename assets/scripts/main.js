@@ -34,9 +34,9 @@ links.forEach(link => {
 // Hashbasierte Navigation mit Icon-Wechsel
 // =============================
 function showSectionByHash() {
-  const id = window.location.hash.substring(1) || 'willkommen';
+  const id = window.location.hash.substring(1) || 'home';
   const validIds = Array.from(sections).map(sec => sec.id);
-  const targetId = validIds.includes(id) ? id : 'willkommen';
+  const targetId = validIds.includes(id) ? id : 'home';
 
   // Sections ein-/ausblenden
   sections.forEach(section => {
@@ -54,6 +54,11 @@ function showSectionByHash() {
       icon.src = isActive ? icon.dataset.active : icon.dataset.default;
     }
   });
+
+  // Wenn URL direkt ohne Hash geöffnet wird, füge ihn hinzu
+  if (!window.location.hash) {
+    window.location.hash = '#home';
+  }
 }
 
 window.addEventListener('DOMContentLoaded', showSectionByHash);
