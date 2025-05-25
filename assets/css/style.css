@@ -34,6 +34,11 @@ body {
   line-height: 1.6;
 }
 
+body.menu-open main {
+  margin-left: 240px; /* gleiche Breite wie das Menü */
+  transition: margin-left 0.3s ease;
+}
+
 /* =========================
    Willkommen Sektion
    ========================= */
@@ -122,9 +127,44 @@ body {
   width: 100%;
 }
 
-.ueber-mich-btn:hover {
+.ueber-mich-btn {
+  position: relative;
+  overflow: hidden;
+  border: 2px solid var(--btn-border);
+  background: transparent;
   color: var(--btn-text);
-  border-color: var(--btn-border);
+  padding: 0.85rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-radius: 1000px;
+  cursor: pointer;
+  z-index: 0;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Trick: Glow nur aktivieren wenn vorherige Transition fertig */
+.ueber-mich-btn:hover::before {
+  animation: reveal-glow 0.4s forwards;
+}
+
+@keyframes reveal-glow {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+/* Sobald vollständig gefüllt → Glow aktiv */
+.ueber-mich-btn:hover {
+  animation: glow-delay 0.3s forwards;
+}
+
+@keyframes glow-delay {
+  to {
+    box-shadow: 0 0 12px rgba(166, 127, 78, 0.4);
+  }
 }
 
 .profilbild {
@@ -363,6 +403,11 @@ body {
 main {
   margin-left: 0;
   padding: 2rem;
+  transition: margin-left 0.3s ease;
+}
+
+body.menu-open main {
+  margin-left: 275px; /* entspricht der Breite deiner .nav-container */
 }
 
 /* =========================
@@ -399,3 +444,368 @@ main {
     left: auto;
   }
 }
+
+.ueber-mich-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+/* Grid-Zuweisungen */
+.grid-info {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  height: fit-content;
+  overflow: hidden;
+}
+
+
+.grid-sprache {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.grid-it {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.grid-werdegang {
+  grid-column: 2 / span 2;
+  grid-row: 2;
+}
+
+/* Allgemeines Container-Design */
+.ueber-mich-container {
+  background-color: rgba(255, 255, 255, 0.03);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(8px);
+  transition: transform 0.3s ease;
+}
+
+.ueber-mich-container h2 {
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.ueber-mich-container p,
+.ueber-mich-container li {
+  color: var(--text);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* Mobil-Optimierung */
+@media (max-width: 992px) {
+  .ueber-mich-grid-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .grid-info,
+  .grid-sprache,
+  .grid-it,
+  .grid-werdegang {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}
+
+.lebenslauf-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.6rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--btn-text);
+  background: transparent;
+  border: 2px solid var(--btn-border);
+  border-radius: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  overflow: hidden;
+  z-index: 0;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Füll-Effekt */
+.lebenslauf-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background-color: var(--accent);
+  z-index: -1;
+  transition: width 0.4s ease;
+}
+
+.lebenslauf-btn:hover::before {
+  width: 100%;
+}
+
+.lebenslauf-btn:hover {
+  color: var(--btn-text);
+  border-color: var(--btn-border);
+  box-shadow: 0 0 12px rgba(166, 127, 78, 0.4);
+}
+
+/* Standard-Icon-Stil */
+.lebenslauf-btn img {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* Dunkelmodus: Icon wird weiss durch Invertierung */
+:root[data-theme='dark'] .lebenslauf-btn img {
+  filter: brightness(0) invert(1);
+}
+
+/* Hellmodus: Icon bleibt normal/schwarz */
+:root[data-theme='light'] .lebenslauf-btn img {
+  filter: none;
+}
+
+.sprache-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1.2rem;
+  border: 1px solid var(--btn-border);
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  background-color: rgba(255, 255, 255, 0.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.sprache-box span {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.level-toggle {
+  position: relative;
+  min-width: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.level-bars {
+  display: flex;
+  gap: 4px;
+  transition: opacity 0.3s ease;
+}
+
+.level-label {
+  position: absolute;
+  opacity: 0;
+  transform: translateY(5px); /* leicht nach unten versetzt */
+  font-size: 0.76rem;
+  font-weight: 500;
+  color: var(--hover-text);
+  transition: opacity 0.4s ease, transform 0.4s ease, color 0.4s ease;
+}
+
+.sprache-box:hover .level-bars {
+  opacity: 0;
+}
+
+.sprache-box:hover .level-label {
+  opacity: 1;
+  transform: translateY(0); /* zurück nach oben */
+}
+
+.para {
+  width: 18px;
+  height: 10px;
+  transform: skewX(-25deg);
+  border: 2px solid var(--accent);
+  background: transparent;
+  transition: background 0.3s ease;
+}
+
+.para.active {
+  background: var(--accent);
+}
+
+.sprache-box img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+/* Wenn das Menü offen ist (body.menu-open), verkleinere alles */
+body.menu-open .para {
+  width: 13px;
+  height: 8px;
+}
+
+@media (max-width: 768px) {
+  .sprache-box {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .level-toggle {
+    min-width: auto;
+    justify-content: center;
+    margin-top: 0.3rem;
+  }
+
+  .sprache-box img {
+    margin-top: 0.5rem;
+    width: 22px;
+    height: 22px;
+  }
+
+  .level-label {
+    font-size: 0.75rem;
+  }
+}
+
+/* Buttons */
+.button-group {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.werdegang-btn {
+  background: none;
+  border: none;
+  padding: 0.6rem 1rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: gray; /* Inaktive Farbe */
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Unterstrich Basis (unsichtbar) */
+.werdegang-btn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0.2rem;
+  width: 0%;
+  height: 2px;
+  background-color: gray;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+/* Hover-Farbe: grau */
+.werdegang-btn:hover::after {
+  width: 100%;
+  background-color: gray;
+}
+
+/* Aktiver Button */
+.werdegang-btn.active {
+  color: var(--accent);
+  font-weight: 650;
+}
+
+.werdegang-btn.active::after {
+  width: 100%;
+  background-color: var(--accent);
+}
+
+.timeline {
+  position: relative;
+  padding-left: 2.5rem;
+  margin-top: 2rem;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 1.25rem;
+  width: 1px;
+  background-color: var(--accent);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 2.5rem;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  top: 0.4rem;
+  left: -1.57rem;
+  width: 12px;
+  height: 12px;
+  background-color: var(--accent);
+  border-radius: 2px;
+}
+
+  .timeline-item .date {
+    color: var(--accent);
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-bottom: 0.1rem;
+    display: inline-block;
+  }
+
+  .timeline-item h4 {
+    margin: 0.3rem 0 0.02rem;
+    font-size: 1.1rem;
+    font-weight: 650;
+    color: var(--text);
+  }
+
+  .timeline-item .institution {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 550;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  .timeline-item p {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .werdegang-separator {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    border: none;
+    height: 1.5px;
+    background-color: #5c5c5c;
+    opacity: 0.3;
+    border-radius: 999px;
+  }
+  
+  p.small-note {
+    font-size: 0.85rem !important;
+    font-weight: 400;
+    color: var(--text);
+    margin-top: 0.5rem;
+    opacity: 0.8;
+    line-height: 1.4;
+  }
