@@ -763,30 +763,31 @@ body.menu-open .para {
   .timeline-item .date {
     color: var(--accent);
     font-weight: 500;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     margin-bottom: 0.1rem;
     display: inline-block;
   }
 
   .timeline-item h4 {
-    margin: 0.3rem 0 0.02rem;
-    font-size: 1.1rem;
-    font-weight: 650;
+    margin-top: 0.4rem;
+    margin-bottom: -0.4rem;
+    font-size: 1.2rem;
+    font-weight: bolder;
     color: var(--text);
   }
 
   .timeline-item .institution {
     display: block;
     font-size: 0.95rem;
-    font-weight: 550;
+    font-weight: bold;
     color: var(--text);
-    margin-bottom: 1rem;
+    margin-bottom: 0.rem;
   }
 
   .timeline-item p {
     margin: 0;
     font-size: 0.95rem;
-    font-weight: 400;
+    font-weight: Light;
     color: var(--text);
     line-height: 1.5;
   }
@@ -809,3 +810,90 @@ body.menu-open .para {
     opacity: 0.8;
     line-height: 1.4;
   }
+
+.portfolio-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.portfolio-item {
+  position: relative;
+  width: 300px;
+  height: 180px;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.portfolio-item:hover {
+  transform: scale(1.03);
+}
+
+.portfolio-item > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hover-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+  border-radius: 12px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.6rem;
+}
+
+.portfolio-item:hover .hover-overlay {
+  opacity: 1;
+}
+
+.project-title {
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.2;
+  text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+}
+
+.project-line {
+  width: 70%;
+  height: 2px;
+  background-color: white;
+  border-radius: 1px;
+}
+
+.project-icon {
+  width: 45px;
+  height: 45px;
+  margin-top: -0.5rem;
+  filter: brightness(0) invert(1);
+}
+
+#portfolio h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+#portfolio p {
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--text);
+  max-width: 800px;
+  margin: 0 auto 2rem auto;
+}
