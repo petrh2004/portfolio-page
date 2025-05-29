@@ -1,305 +1,96 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
 /* =========================
-   Farbvariablen je nach Theme
-   ========================= */
+  Farbkatalog
+========================= */
+/* === Hell-Modus === */
 :root[data-theme='light'] {
   --background: #f7f7f7;
-  --text: #232323;
+  --foreground: #000000;
   --accent: #a67f4e;
-  --underline-hover: #232323;
-  --btn-text: #232323;
-  --btn-border: #232323;
 }
 
+/* === Dunkel-Modus === */
 :root[data-theme='dark'] {
   --background: #181818;
-  --text: #fafafa;
+  --foreground: #ffffff;
   --accent: #a67f4e;
-  --underline-hover: #fafafa;
-  --btn-text: #ffffff;
-  --btn-border: #ffffff;
 }
 
 /* =========================
-   Global Styles
-   ========================= */
+  Grundstruktur
+========================= */
+main {
+  padding: 2rem;
+  transition: margin-left 0.4s ease;
+}
+
 body {
   margin: 0;
-  background: var(--background);
-  color: var(--text);
   font-family: 'Inter', Arial, sans-serif;
-  transition: background 0.6s, color 0.6s;
   font-size: 16px;
   line-height: 1.6;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  color: var(--foreground);
+  background: var(--background);
+  transition: background 0.4s ease, color 0.4s ease;
 }
 
 body.menu-open main {
-  margin-left: 240px; /* gleiche Breite wie das Menü */
-  transition: margin-left 0.3s ease;
+  margin-left: 275px;
 }
 
 /* =========================
-   Willkommen Sektion
-   ========================= */
-.willkommen-box {
-  max-width: 1000px;
-  margin: 4rem auto;
-  padding: 4rem 4rem; /* vorher: 3rem 2rem */
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 10px 32px rgba(0,0,0,0.12);
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2rem;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
-}
-
-.willkommen-text {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 0.15rem; /* engeres Spacing */
-  text-align: left;
-}
-
-.willkommen-text p {
-  margin: 0.1rem 0; /* sehr geringer Abstand */
-  font-size: 1.1rem;
-  line-height: 1.4;
-}
-
-.willkommen-text p:first-child {
-  font-size: 4.5rem; /* statt 3rem */
-  font-weight: 900; /* fetter */
-  color: var(--accent);
-  margin-bottom: 0.1rem;
-}
-
-.willkommen-text p:nth-child(2) {
-  font-size: 1.8rem; /* leicht grösser */
-  font-weight: 700;
-  margin-bottom: 0.2rem;
-}
-
-.willkommen-text p:nth-child(3) {
-  font-size: 1.2rem;
-  margin-bottom: 0.4rem;
-  max-width: 600px;
-}
-
-.ueber-mich-btn {
-  position: relative;
-  background: transparent;
-  color: var(--btn-text);
-  border: 2px solid var(--btn-border);
-  padding: 0.85rem 2rem;
-  font-size: 1.1rem;
-  font-weight: 500;
-  border-radius: 1000px;
-  cursor: pointer;
-  overflow: hidden;
-  z-index: 0;
-  transition: color 0.3s ease, border-color 0.3s ease;
-  margin-top: 0.8rem;
-  margin-left: 0.3rem;
-}
-
-.ueber-mich-btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0%;
-  height: 100%;
-  background-color: var(--accent);
-  z-index: -1;
-  transition: width 0.4s ease;
-}
-
-.ueber-mich-btn:hover::before {
-  width: 100%;
-}
-
-.ueber-mich-btn {
-  position: relative;
-  overflow: hidden;
-  border: 2px solid var(--btn-border);
-  background: transparent;
-  color: var(--btn-text);
-  padding: 0.85rem 2rem;
-  font-size: 1.1rem;
-  font-weight: 500;
-  border-radius: 1000px;
-  cursor: pointer;
-  z-index: 0;
-  transition: color 0.3s ease, border-color 0.3s ease;
-}
-
-/* Trick: Glow nur aktivieren wenn vorherige Transition fertig */
-.ueber-mich-btn:hover::before {
-  animation: reveal-glow 0.4s forwards;
-}
-
-@keyframes reveal-glow {
-  0% {
-    width: 0%;
-  }
-  100% {
-    width: 100%;
-  }
-}
-
-/* Sobald vollständig gefüllt → Glow aktiv */
-.ueber-mich-btn:hover {
-  animation: glow-delay 0.3s forwards;
-}
-
-@keyframes glow-delay {
-  to {
-    box-shadow: 0 0 12px rgba(166, 127, 78, 0.4);
-  }
-}
-
-.profilbild {
-  flex-shrink: 0;
-  max-width: 300px;
-  height: auto;
-  margin-left: -20px;
-  border-radius: 20px;
-  object-fit: cover;
-  border: 4px solid var(--accent);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-}
-
-@media (max-width: 768px) {
-  .willkommen-box {
-    flex-direction: column;
-    text-align: center;
-    padding: 2rem 1.5rem;
-    gap: 1.5rem;
-  }
-
-  .willkommen-text {
-    align-items: center;
-    text-align: center;
-  }
-
-  .willkommen-text .ueber-mich-btn {
-    align-self: center;
-  }
-
-  .ueber-mich-btn {
-    width: 100%;
-    font-size: 1rem;
-  }
-
-  .profilbild {
-    max-width: 80%;
-    margin-left: 0;
-    height: auto;
-  }
-}
-
-/* =========================
-   Icons
-   ========================= */
-.nav-icon {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-  opacity: 0.6;
-  transition: filter 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
-}
-
-:root[data-theme='dark'] .nav-icon {
-  filter: brightness(0) invert(1);
-}
-
-:root[data-theme='light'] .nav-icon {
-  filter: none;
-}
-
-/* =========================
-   Text neben Icon
-   ========================= */
-.nav-text {
-  flex-grow: 1;
-  white-space: nowrap;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-}
-
-/* =========================
-   Menü-Knopf & Theme-Toggle
-   ========================= */
-#menu-toggle,
-#theme-toggle {
+  Navigation
+========================= */
+/* === Steuerungs-Knöpfe (Menu & Modus) === */
+.menu-toggle,
+.theme-toggle {
   position: fixed;
   top: 1.3rem;
   z-index: 2000;
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(6px);
+  padding: 0.5rem;
   border: none;
   border-radius: 10px;
-  padding: 0.5rem;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
   cursor: pointer;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
+  transition: background 0.4s ease, box-shadow 0.4s ease;
 }
 
-#menu-toggle {
-  left: 1.5rem;
-}
+.menu-toggle {left: 1.5rem;}
+.theme-toggle {left: 4.5rem;}
 
-#theme-toggle {
-  left: 4.5rem;
-}
-
-#menu-toggle:hover,
-#theme-toggle:hover {
-  background: rgba(255,255,255,0.15);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-#menu-toggle img,
-#theme-toggle img {
+.menu-toggle img,
+.theme-toggle img {
   width: 28px;
   height: 28px;
 }
 
-/* =========================
-   Glass-Nav-Container – volle Höhe
-   ========================= */
+.menu-toggle:hover,
+.theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+}
+
+/* === Menu: Seitenleiste === */
 .nav-container {
   position: fixed;
   top: 0;
-  bottom: 0;
   left: 0;
-  width: 240px;
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  box-shadow: none;
-  border: none;
-  outline: none;
-  padding: 6rem 1rem 2rem;
+  bottom: 0;
+  z-index: 1500;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  z-index: 1500;
-  transition: transform 0.3s ease, opacity 0.3s ease;
-}
-
-.nav-container::before,
-.nav-container::after {
-  content: none !important;
+  width: 240px;
+  padding: 6rem 1rem 2rem;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 6px 0 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
 .nav-container.hidden {
@@ -308,30 +99,44 @@ body.menu-open main {
   pointer-events: none;
 }
 
-/* =========================
-   Navigation
-   ========================= */
+/* === Menu: Listendarstellung === */
 .nav-container nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
+/* === Menu: Text-Design === */
 .nav-link {
   position: relative;
   display: flex;
   align-items: center;
   gap: 1rem;
   padding: 0.5rem 1rem;
+  color: var(--foreground);
   text-decoration: none;
-  color: var(--text);
-  transition: color 0.3s ease;
+  white-space: nowrap;
+  line-height: 1.2;
+  transition: color 0.4s ease;
 }
 
-/* Unterstrich bei Hover */
+/* === Menu: Icon-Design === */
+.nav-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  opacity: 0.6;
+  transition: filter 0.4s ease, opacity 0.4s ease, transform 0.4s ease;
+}
+
+:root[data-theme='dark'] .nav-icon {
+  filter: brightness(0) invert(1);
+}
+
+/* === Menu: Underline-Effect === */
 .nav-link::after {
   content: "";
   position: absolute;
@@ -339,112 +144,160 @@ body.menu-open main {
   bottom: 0.2rem;
   width: 0%;
   height: 2px;
-  background-color: var(--underline-hover);
-  transition: width 0.3s ease;
+  background-color: var(--foreground);
+  transition: width 0.4s ease;
 }
 
 .nav-link:hover::after {
   width: calc(100% - 2rem);
 }
 
-/* Kein Kasten beim Hover */
-.nav-link:hover:not(.active) {
-  background-color: transparent;
-  box-shadow: none;
-  transform: none;
+.nav-link:hover .nav-text {
+  color: var(--foreground);
 }
 
-/* Icon-Effekt bei Hover */
 .nav-link:hover .nav-icon {
   opacity: 1;
 }
 
-/* =========================
-   Aktiver Link
-   ========================= */
+/* === Menu: Active Link-Effect === */
 .nav-link.active {
   font-weight: bold;
-  color: var(--text);
+  color: var(--foreground);
   pointer-events: none;
   cursor: default;
   background-color: transparent;
   box-shadow: none;
 }
 
-/* Aktiver Text farbig */
 .nav-link.active .nav-text {
   color: var(--accent);
 }
 
-/* Kein Farbeffekt beim Hover für Text */
-.nav-link:hover .nav-text {
-  color: var(--text);
-}
-
-/* Aktives Icon hervorgehoben */
 .nav-link.active .nav-icon {
   opacity: 1;
   transform: scale(1.15);
 }
 
-/* Im Dark Mode: aktives Icon nicht invertieren */
 :root[data-theme='dark'] .nav-link.active .nav-icon {
   filter: none;
 }
 
-/* Hover soll Icon nicht skalieren */
-.nav-link:hover .nav-icon {
-  transform: none;
+/* =========================
+  Home-Sektion
+========================= */
+/* === Container-Design === */
+.willkommen-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  max-width: 1000px;
+  margin: 4rem auto;
+  padding: 4rem;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 12px 18px 32px rgba(0,0,0,0.12);
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* === Text-Design === */
+.willkommen-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.willkommen-text p {
+  margin: 0.1rem 0;
+  font-size: 1.1rem;
+  line-height: 1.4;
+}
+
+/* Text: Name */
+.willkommen-text p:first-child {
+  margin-bottom: 0.1rem;
+  font-size: 4.5rem;
+  font-weight: 900;
+  color: var(--accent);
+}
+
+/* Text: Studiengang */
+.willkommen-text p:nth-child(2) {
+  margin-bottom: 0.2rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+/* Text: Beschreibung */
+.willkommen-text p:nth-child(3) {
+  margin-bottom: 0.4rem;
+  font-size: 1.2rem;
+  max-width: 600px;
+}
+
+/* === Über-mich-Knopf === */
+.ueber-mich-btn {
+  position: relative;
+  z-index: 0;
+  display: inline-block;
+  margin-top: 0.8rem;
+  margin-left: 0.3rem;
+  padding: 0.85rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--foreground);
+  background: transparent;
+  border: 2px solid var(--foreground);
+  border-radius: 1000px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* === Über-mich-Knopf: Effects === */
+.ueber-mich-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 0%;
+  height: 100%;
+  background-color: var(--accent);
+  transition: width 0.4s ease;
+}
+
+.ueber-mich-btn:hover::before {
+  width: 100%;
+}
+
+.ueber-mich-btn:hover {
+  box-shadow: 0 0 15px var(--accent);
+}
+
+/* === Profilbild === */
+.profilbild {
+  flex-shrink: 0;
+  max-width: 300px;
+  margin-left: -20px;
+  object-fit: cover;
+  border: 4px solid var(--accent);
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  transition: box-shadow 0.4s ease;
 }
 
 /* =========================
-   Hauptbereich
-   ========================= */
-main {
-  margin-left: 0;
-  padding: 2rem;
-  transition: margin-left 0.3s ease;
-}
-
-body.menu-open main {
-  margin-left: 275px; /* entspricht der Breite deiner .nav-container */
-}
-
-/* =========================
-   Mobile responsive behavior
-   ========================= */
-@media (max-width: 768px) {
-  .nav-container {
-    left: auto;
-    right: 0;
-    width: 80%;
-    max-width: 320px;
-    transform: translateX(100%);
-    padding-top: 4rem;
-  }
-
-  .nav-container:not(.hidden) {
-    transform: translateX(0);
-  }
-
-  main {
-    margin-left: 0;
-    padding: 1.5rem;
-  }
-
-  #menu-toggle {
-    top: 1rem;
-    right: 1rem;
-    left: auto;
-  }
-
-  #theme-toggle {
-    top: 1rem;
-    right: 4.5rem;
-    left: auto;
-  }
-}
-
+  Über-mich-Sektion
+========================= */
+/* === Grid-Layout === */
 .ueber-mich-grid-layout {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -455,18 +308,11 @@ body.menu-open main {
   padding: 2rem;
 }
 
-/* Grid-Zuweisungen */
 .grid-info {
   grid-column: 1;
   grid-row: 1 / span 2;
   height: fit-content;
   overflow: hidden;
-}
-
-
-.grid-sprache {
-  grid-column: 2;
-  grid-row: 1;
 }
 
 .grid-it {
@@ -479,16 +325,17 @@ body.menu-open main {
   grid-row: 2;
 }
 
-/* Allgemeines Container-Design */
+/* === Alle-Container === */
 .ueber-mich-container {
+  backdrop-filter: blur(8px);
   background-color: rgba(255, 255, 255, 0.03);
-  padding: 2rem;
   border-radius: 16px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-  backdrop-filter: blur(8px);
-  transition: transform 0.3s ease;
+  padding: 2rem;
+  transition: transform 0.4s ease;
 }
 
+/* === Alle-Schriftarten === */
 .ueber-mich-container h2 {
   color: var(--accent);
   margin-bottom: 0.5rem;
@@ -496,29 +343,15 @@ body.menu-open main {
 
 .ueber-mich-container p,
 .ueber-mich-container li {
-  color: var(--text);
+  color: var(--foreground);
   font-size: 1.05rem;
   line-height: 1.6;
 }
 
-/* Mobil-Optimierung */
-@media (max-width: 992px) {
-  .ueber-mich-grid-layout {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
-  }
-
-  .grid-info,
-  .grid-sprache,
-  .grid-it,
-  .grid-werdegang {
-    grid-column: 1;
-    grid-row: auto;
-  }
-}
-
+/* === CV-Knopf === */
 .lebenslauf-btn {
   position: relative;
+  z-index: 0;
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
@@ -526,28 +359,37 @@ body.menu-open main {
   padding: 0.75rem 1.6rem;
   font-size: 1rem;
   font-weight: 500;
-  color: var(--btn-text);
+  color: var(--foreground);
   background: transparent;
-  border: 2px solid var(--btn-border);
+  border: 2px solid var(--foreground);
   border-radius: 12px;
   cursor: pointer;
   text-decoration: none;
   overflow: hidden;
-  z-index: 0;
-  transition: color 0.3s ease, border-color 0.3s ease;
+  transition: color 0.4s ease, border-color 0.4s ease;
 }
 
-/* Füll-Effekt */
+/* === CV-Knopf: Effects === */
 .lebenslauf-btn::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
+  z-index: -1;
   width: 0%;
   height: 100%;
   background-color: var(--accent);
-  z-index: -1;
   transition: width 0.4s ease;
+}
+
+.lebenslauf-btn img {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+:root[data-theme='dark'] .lebenslauf-btn img {
+  filter: brightness(0) invert(1);
 }
 
 .lebenslauf-btn:hover::before {
@@ -555,44 +397,57 @@ body.menu-open main {
 }
 
 .lebenslauf-btn:hover {
-  color: var(--btn-text);
-  border-color: var(--btn-border);
-  box-shadow: 0 0 12px rgba(166, 127, 78, 0.4);
+  color: var(--foreground);
+  border-color: var(--foreground);
+  box-shadow: 0 0 15px var(--accent);
 }
 
-/* Standard-Icon-Stil */
-.lebenslauf-btn img {
-  width: 20px;
-  height: 20px;
-  transition: transform 0.3s ease, filter 0.3s ease;
-}
-
-/* Dunkelmodus: Icon wird weiss durch Invertierung */
-:root[data-theme='dark'] .lebenslauf-btn img {
-  filter: brightness(0) invert(1);
-}
-
-/* Hellmodus: Icon bleibt normal/schwarz */
-:root[data-theme='light'] .lebenslauf-btn img {
-  filter: none;
-}
-
+/* === Sprach- & IT-Spalten === */
 .sprache-box {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 0.8rem 1.2rem;
-  border: 1px solid var(--btn-border);
-  border-radius: 12px;
+  align-items: center;
   margin-bottom: 1rem;
-  background-color: rgba(255, 255, 255, 0.02);
+  padding: 0.8rem 1.2rem;
+  border: 2px solid var(--foreground);
+  border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
 }
 
-.sprache-box span {
-  font-size: 1rem;
+/* === Bewertungssystem === */
+.para {
+  width: 18px;
+  height: 10px;
+  transform: skewX(-25deg);
+  border: 2px solid var(--accent);
+  background: transparent;
+  transition: background 0.4s ease;
+}
+
+.para.active {
+  background: var(--accent);
+}
+
+body.menu-open .para {
+  width: 13px;
+  height: 10px;
+}
+
+.level-bars {
+  display: flex;
+  gap: 4px;
+  transition: opacity 0.4s ease;
+}
+
+/* === Bewertungssystem-Hover === */
+.level-label {
+  position: absolute;
+  font-size: 0.88rem;
   font-weight: 500;
-  color: var(--text);
+  color: var(--foreground);
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity 0.4s ease, transform 0.4s ease, color 0.4s ease;
 }
 
 .level-toggle {
@@ -603,44 +458,16 @@ body.menu-open main {
   align-items: center;
 }
 
-.level-bars {
-  display: flex;
-  gap: 4px;
-  transition: opacity 0.3s ease;
-}
-
-.level-label {
-  position: absolute;
-  opacity: 0;
-  transform: translateY(5px); /* leicht nach unten versetzt */
-  font-size: 0.76rem;
-  font-weight: 500;
-  color: var(--hover-text);
-  transition: opacity 0.4s ease, transform 0.4s ease, color 0.4s ease;
-}
-
 .sprache-box:hover .level-bars {
   opacity: 0;
 }
 
 .sprache-box:hover .level-label {
   opacity: 1;
-  transform: translateY(0); /* zurück nach oben */
+  transform: translateY(0);
 }
 
-.para {
-  width: 18px;
-  height: 10px;
-  transform: skewX(-25deg);
-  border: 2px solid var(--accent);
-  background: transparent;
-  transition: background 0.3s ease;
-}
-
-.para.active {
-  background: var(--accent);
-}
-
+/* === Sprach- & IT-Bilder === */
 .sprache-box img {
   width: 24px;
   height: 24px;
@@ -648,58 +475,27 @@ body.menu-open main {
   border-radius: 4px;
 }
 
-/* Wenn das Menü offen ist (body.menu-open), verkleinere alles */
-body.menu-open .para {
-  width: 13px;
-  height: 8px;
-}
-
-@media (max-width: 768px) {
-  .sprache-box {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 1rem;
-    text-align: center;
-  }
-
-  .level-toggle {
-    min-width: auto;
-    justify-content: center;
-    margin-top: 0.3rem;
-  }
-
-  .sprache-box img {
-    margin-top: 0.5rem;
-    width: 22px;
-    height: 22px;
-  }
-
-  .level-label {
-    font-size: 0.75rem;
-  }
-}
-
-/* Buttons */
+/* === Timeline-Knöpfe === */
 .button-group {
   display: flex;
-  gap: 0.5rem;
   flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
 .werdegang-btn {
-  background: none;
-  border: none;
+  position: relative;
   padding: 0.6rem 1rem;
   font-size: 1.05rem;
   font-weight: 500;
-  color: gray; /* Inaktive Farbe */
-  position: relative;
+  color: gray;
+  background: none;
+  border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
 }
 
-/* Unterstrich Basis (unsichtbar) */
+
+/* === Timeline-Knöpfe: Effects === */
 .werdegang-btn::after {
   content: "";
   position: absolute;
@@ -708,16 +504,14 @@ body.menu-open .para {
   width: 0%;
   height: 2px;
   background-color: gray;
-  transition: width 0.3s ease, background-color 0.3s ease;
+  transition: width 0.4s ease, background-color 0.4s ease;
 }
 
-/* Hover-Farbe: grau */
 .werdegang-btn:hover::after {
   width: 100%;
   background-color: gray;
 }
 
-/* Aktiver Button */
 .werdegang-btn.active {
   color: var(--accent);
   font-weight: 650;
@@ -728,10 +522,22 @@ body.menu-open .para {
   background-color: var(--accent);
 }
 
+/* === Trennlinie: Knöpfe und Zeitstrahl === */
+.werdegang-separator {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  height: 1.5px;
+  background-color: #5c5c5c;
+  opacity: 0.3;
+  border: none;
+  border-radius: 999px;
+}
+
+/* === Zeitstrahl-Design === */
 .timeline {
   position: relative;
-  padding-left: 2.5rem;
   margin-top: 2rem;
+  padding-left: 2.5rem;
 }
 
 .timeline::before {
@@ -742,11 +548,6 @@ body.menu-open .para {
   left: 1.25rem;
   width: 1px;
   background-color: var(--accent);
-}
-
-.timeline-item {
-  position: relative;
-  margin-bottom: 2.5rem;
 }
 
 .timeline-item::before {
@@ -760,57 +561,50 @@ body.menu-open .para {
   border-radius: 2px;
 }
 
-  .timeline-item .date {
-    color: var(--accent);
-    font-weight: 500;
-    font-size: 0.9rem;
-    margin-bottom: 0.1rem;
-    display: inline-block;
-  }
+.timeline-item {
+  position: relative;
+  margin-bottom: 2.5rem;
+}
 
-  .timeline-item h4 {
-    margin-top: 0.4rem;
-    margin-bottom: -0.4rem;
-    font-size: 1.2rem;
-    font-weight: bolder;
-    color: var(--text);
-  }
+/* === Zeitstrahl: Text-Design === */
+/* Datum */
+.timeline-item .date {
+  display: inline-block;  
+  margin-bottom: 0.1rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--accent);
+}
 
-  .timeline-item .institution {
-    display: block;
-    font-size: 0.95rem;
-    font-weight: bold;
-    color: var(--text);
-    margin-bottom: 0.rem;
-  }
+/* Beschäftigung */
+.timeline-item h4 {
+  margin-top: 0.4rem;
+  margin-bottom: -0.4rem;
+  font-size: 1.2rem;
+  font-weight: bolder;
+  color: var(--foreground);
+}
 
-  .timeline-item p {
-    margin: 0;
-    font-size: 0.95rem;
-    font-weight: Light;
-    color: var(--text);
-    line-height: 1.5;
-  }
+/* Beschäftigungsort */
+.timeline-item .institution {
+  font-size: 0.95rem;
+  font-weight: bold;
+  color: var(--foreground);
+}
 
-  .werdegang-separator {
-    margin-top: 1rem;
-    margin-bottom: 2rem;
-    border: none;
-    height: 1.5px;
-    background-color: #5c5c5c;
-    opacity: 0.3;
-    border-radius: 999px;
-  }
-  
-  p.small-note {
-    font-size: 0.85rem !important;
-    font-weight: 400;
-    color: var(--text);
-    margin-top: 0.5rem;
-    opacity: 0.8;
-    line-height: 1.4;
-  }
+/* Beschreibung */
+.timeline-item p {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: var(--foreground);
+}
 
+/* =========================
+  Portfolio-Sektion
+========================= */
+/* === Grid-Layout === */
 .portfolio-grid {
   display: flex;
   flex-wrap: wrap;
@@ -819,42 +613,59 @@ body.menu-open .para {
   margin-top: 2rem;
 }
 
-.portfolio-item {
-  position: relative;
-  width: 300px;
-  height: 180px;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+/* === Text-Design === */
+#portfolio h2 {
+  text-align: center;
+  font-size: 2.5rem;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
 }
 
-.portfolio-item:hover {
-  transform: scale(1.03);
+#portfolio p {
+  text-align: center;
+  font-size: 1.1rem;
+  color: var(--foreground);
+  max-width: 800px;
+  margin: 0 auto 2rem auto;
+}
+
+/* === Alle-Container === */
+.portfolio-item {
+  position: relative;
+  overflow: hidden;
+  width: 300px;
+  height: 180px;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.4s ease;
 }
 
 .portfolio-item > img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
+}
+
+/* === Container-Hover: Effects === */
+.portfolio-item:hover {
+  transform: scale(1.03);
 }
 
 .hover-overlay {
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.9);
-  opacity: 0;
-  transition: opacity 0.3s ease;
   z-index: 1;
-  border-radius: 12px;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
   gap: 0.6rem;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.9);
+  opacity: 0;
+  border-radius: 12px;
+  transition: opacity 0.4s ease;
 }
 
 .portfolio-item:hover .hover-overlay {
@@ -862,10 +673,10 @@ body.menu-open .para {
 }
 
 .project-title {
-  color: #ffffff;
   font-size: 1.2rem;
   font-weight: 500;
   line-height: 1.2;
+  color: #ffffff;
   text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
 }
 
@@ -883,17 +694,71 @@ body.menu-open .para {
   filter: brightness(0) invert(1);
 }
 
-#portfolio h2 {
-  text-align: center;
-  font-size: 2.5rem;
-  color: var(--accent);
-  margin-bottom: 0.5rem;
+/* =========================
+  Zukunft-Sektion 
+========================= */
+
+
+
+
+
+
+/* =========================
+  Kontakt-Sektion 
+========================= */
+
+
+
+
+
+
+/* =========================
+  Responsiv
+========================= */
+
+
+
+
+
+
+
+/* =========================
+  Barrierefreiheit
+========================= */
+
+
+.portfolio-item {
+  position: relative;
+  display: block;
+  overflow: hidden;
 }
 
-#portfolio p {
-  text-align: center;
-  font-size: 1.1rem;
-  color: var(--text);
-  max-width: 800px;
-  margin: 0 auto 2rem auto;
+.hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.portfolio-item:hover .hover-overlay {
+  opacity: 1;
+}
+
+.hover-button {
+  padding: 0.8rem 1.2rem;
+  font-size: 1rem;
+  background-color: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.hover-button:hover {
+  transform: scale(1.05);
 }

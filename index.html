@@ -4,325 +4,310 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>H. Petrov | Portfolio</title>
-  <link rel="stylesheet" href="assets/css/style.css">
 
-  <!-- Favicon -->
+  <!--- Verbesserung für Flackern (Neuladen) --->
+  <script>
+    (function () {
+      const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+
+  <link rel="stylesheet" href="assets/css/style.css">
   <link rel="icon" href="assets/images/favicon.png" type="image/png">
+  <script src="assets/js/main.js" defer></script>
 </head>
 <body>
 
+<button class="menu-toggle" aria-label="Menü öffnen" aria-expanded="false" tabindex="0">
+  <img src="assets/images/menu.png" alt="Menü öffnen" class="nav-icon">
+</button>
 
-  <!-- Menü-Button -->
-  <button id="menu-toggle" aria-label="Menü öffnen" aria-expanded="false">
-    <img src="assets/images/menu.png" alt="Menü öffnen" class="nav-icon">
-  </button>
+<button class="theme-toggle" aria-label="Modus wechseln" tabindex="0">
+  <img src="assets/images/moon.png" alt="Theme Icon" class="theme-icon nav-icon">
+</button>
 
-  <!-- Dark/Light Mode Umschalter -->
-  <button id="theme-toggle" aria-label="Modus wechseln">
-    <img src="assets/images/moon.png" alt="Theme Icon" id="theme-icon" class="nav-icon">
-  </button>
-
-  <!-- Navigation -->
-  <div class="nav-container hidden" id="nav-container">
-    <nav>
-      <ul>
-        <li><a href="#home" class="nav-link">
-          <img
-            src="assets/images/home.png"
-            class="nav-icon"
-            alt="Home"
-            data-default="assets/images/home.png"
-            data-active="assets/images/home2.png"
-          >
-          <span class="nav-text">Home</span>
-        </a></li>
-        <li><a href="#ueber-mich" class="nav-link">
-          <img
-            src="assets/images/person.png"
-            class="nav-icon"
-            alt="Über mich"
-            data-default="assets/images/person.png"
-            data-active="assets/images/person2.png"
-          >
-          <span class="nav-text">Über mich</span>
-        </a></li>
-        <li><a href="#portfolio" class="nav-link">
-          <img
-            src="assets/images/project.png"
-            class="nav-icon"
-            alt="Portfolio"
-            data-default="assets/images/project.png"
-            data-active="assets/images/project2.png"
-          >
-          <span class="nav-text">Mein Portfolio</span>
-        </a></li>
-        <li><a href="#zukunft" class="nav-link">
-          <img
-            src="assets/images/future.png"
-            class="nav-icon"
-            alt="Zukunft"
-            data-default="assets/images/future.png"
-            data-active="assets/images/future2.png"
-          >
-          <span class="nav-text">Meine Zukunft</span>
-        </a></li>
-        <li><a href="#kontakt" class="nav-link">
-          <img
-            src="assets/images/mail.png"
-            class="nav-icon"
-            alt="Kontakt"
-            data-default="assets/images/mail.png"
-            data-active="assets/images/mail2.png"
-          >
-          <span class="nav-text">Kontakt</span>
-        </a></li>
-      </ul>
-    </nav>
-  </div>
-
-  <main>
-    <section id="home">
-      <div class="willkommen-box">
-        <div class="willkommen-text">
-          <p>H. Petrov</p>
-          <p>Student, Wirtschaftsinformatik BFH</p>
-          <p>Ich bin Student an der Berner Fachhochschule und Teilinhaber des Unternehmens Auto Schmitten GmbH. Danke für Ihr Interesse an meinem Leben und viel Spass beim Stöbern.</p>
-          <button class="ueber-mich-btn" onclick="window.location.href='#ueber-mich'">Über mich</button>
-        </div>
-        <img src="assets/images/profilbild.png" alt="Profilbild" class="profilbild">
-      </div>
-    </section>
-    <section id="ueber-mich">
-  <div class="ueber-mich-grid-layout">
-    
-    <!-- Spalte 1: Informationen über mich -->
-    <div class="ueber-mich-container grid-info">
-  <h2>Informationen über mich</h2>
-    <p>Hi, mein Name ist Hristian Petrov. Ich bin 21 Jahre alt und lebe seit meiner Geburt in Bern-Bümpliz.</p>
-    <p>Nach der Oberstufe absolvierte ich eine Ausbildung zum Kaufmann EFZ (E-Profil) an der Wirtschafts- und Kaderschule WKS Bern und sammelte parallel Praxiserfahrung bei den Reformierten Kirchen Bern-Jura-Solothurn. Anschliessend erlangte ich die Berufsmaturität Typ Wirtschaft an derselben Schule.</p>
-    <p>Aktuell studiere ich Wirtschaftsinformatik an der Berner Fachhochschule BFH und bin zudem Teilinhaber der Auto Schmitten GmbH.</p>
-    <p class="small-note">P.S.: Die Reformierten Kirchen Bern-Jura-Solothurn sind keine Kirche im klassischen Sinn, sondern eine NGO, die als Auskunftsstelle fungiert, den Kirchensteuernanteil der reformierten Kirchen verwaltet und gleichzeitig als Hilfsorganisation sowie Partnerin zahlreicher weiterer Organisationen tätig ist.</p>
-  <a href="assets/documents/lebenslauf.pdf" class="lebenslauf-btn" download>
-  <span>CV herunterladen</span>
-  <img src="assets/images/download.png" alt="Download Icon">
-</a>
+<div class="nav-container hidden">
+  <nav>
+    <ul>
+      <li><a href="#home" class="nav-link" tabindex="0">
+        <img
+          src="assets/images/home.png"
+          class="nav-icon"
+          alt="Home"
+          data-default="assets/images/home.png"
+          data-active="assets/images/home2.png"
+        >
+        <span class="nav-text">Home</span>
+      </a></li>
+      <li><a href="#ueber-mich" class="nav-link" tabindex="0">
+        <img
+          src="assets/images/person.png"
+          class="nav-icon"
+          alt="Über mich"
+          data-default="assets/images/person.png"
+          data-active="assets/images/person2.png"
+        >
+        <span class="nav-text">Über mich</span>
+      </a></li>
+      <li><a href="#portfolio" class="nav-link" tabindex="0">
+        <img
+          src="assets/images/project.png"
+          class="nav-icon"
+          alt="Portfolio"
+          data-default="assets/images/project.png"
+          data-active="assets/images/project2.png"
+        >
+        <span class="nav-text">Mein Portfolio</span>
+      </a></li>
+      <li><a href="#zukunft" class="nav-link" tabindex="0">
+        <img
+          src="assets/images/future.png"
+          class="nav-icon"
+          alt="Zukunft"
+          data-default="assets/images/future.png"
+          data-active="assets/images/future2.png"
+        >
+        <span class="nav-text">Meine Zukunft</span>
+      </a></li>
+      <li><a href="#kontakt" class="nav-link" tabindex="0">
+        <img
+          src="assets/images/mail.png"
+          class="nav-icon"
+          alt="Kontakt"
+          data-default="assets/images/mail.png"
+          data-active="assets/images/mail2.png"
+        >
+        <span class="nav-text">Kontakt</span>
+      </a></li>
+    </ul>
+  </nav>
 </div>
 
-<!-- Sprachkenntnisse -->
-    <div class="ueber-mich-container grid-sprache">
-      <h2>Meine Sprachkenntnisse</h2>
-
-      <!-- Deutsch -->
-      <div class="sprache-box">
-        <span>Deutsch</span>
-        <div class="level-toggle">
-          <div class="level-bars">
-            <div class="para active"></div>
-            <div class="para active"></div>
-            <div class="para active"></div>
-            <div class="para active"></div>
-            <div class="para active"></div>
-          </div>
-          <div class="level-label">– Muttersprache</div>
-        </div>
-        <img src="assets/images/germany.png" alt="Deutsch" />
+<main>
+  <section id="home">
+    <div class="willkommen-box">
+      <div class="willkommen-text">
+        <p> H. Petrov</p>
+        <p>Student, Wirtschaftsinformatik BFH</p>
+        <p>Ich studiere Wirtschaftsinformatik an der BFH und bin Mitinhaber der Auto Schmitten GmbH. Mich interessieren digitale Lösungen, Unternehmertum und wie man gute Ideen in die Tat umsetzt. Aus diesem Grund arbeite ich gern kreativ und lösungsorientiert an neuen Projekten.</p>
+        <button class="ueber-mich-btn" onclick="window.location.href='#ueber-mich'">Über mich</button>
       </div>
-
-      <!-- Mazedonisch -->
-      <div class="sprache-box">
-        <span>Mazedonisch</span>
-        <div class="level-toggle">
-          <div class="level-bars">
-            <div class="para active"></div>
-            <div class="para active"></div>
-            <div class="para active"></div>
-            <div class="para active"></div>
-            <div class="para"></div>
-          </div>
-          <div class="level-label">– Muttersprache</div>
-        </div>
-        <img src="assets/images/macedonia.png" alt="Mazedonisch" />
-      </div>
-
-      <!-- Französisch -->
-      <div class="sprache-box">
-        <span>Französisch</span>
-        <div class="level-toggle">
-          <div class="level-bars">
-            <div class="para active"></div>
-            <div class="para active"></div>
-            <div class="para active"></div>
-            <div class="para"></div>
-            <div class="para"></div>
-          </div>
-          <div class="level-label">– Fortgeschritten (B2)</div>
-        </div>
-        <img src="assets/images/france.png" alt="Französisch" />
-      </div>
-
-      <!-- Englisch -->
-      <div class="sprache-box">
-        <span>Englisch</span>
-        <div class="level-toggle">
-          <div class="level-bars">
-            <div class="para active"></div>
-            <div class="para active"></div>
-            <div class="para active"></div>
-            <div class="para active"></div>
-            <div class="para"></div>
-          </div>
-          <div class="level-label">– Fortgeschritten (B2)</div>
-        </div>
-        <img src="assets/images/england.png" alt="Englisch" />
-      </div>
-    </div>
-
-<!-- IT-Kenntnisse allgemein -->
-<div class="ueber-mich-container grid-it">
-  <h2>Meine IT-Kenntnisse</h2>
-  <div class="sprachen-grid">
-
-    <!-- HTML5 -->
-    <div class="sprache-box">
-      <span>HTML5</span>
-      <div class="level-toggle">
-        <div class="level-bars">
-          <div class="para active"></div>
-          <div class="para active"></div>
-          <div class="para active"></div>
-          <div class="para active"></div>
-          <div class="para"></div>
-        </div>
-        <div class="level-label">– Fortgeschritten</div>
-      </div>
-      <img src="assets/images/html.png" alt="HTML5">
-    </div>
-
-    <!-- JavaScript -->
-    <div class="sprache-box">
-      <span>JavaScript</span>
-      <div class="level-toggle">
-        <div class="level-bars">
-          <div class="para active"></div>
-          <div class="para active"></div>
-          <div class="para"></div>
-          <div class="para"></div>
-          <div class="para"></div>
-        </div>
-        <div class="level-label">– Grundkenntnisse</div>
-      </div>
-      <img src="assets/images/javascript.png" alt="JavaScript">
-    </div>
-
-    <!-- CSS -->
-    <div class="sprache-box">
-      <span>CSS</span>
-      <div class="level-toggle">
-        <div class="level-bars">
-          <div class="para active"></div>
-          <div class="para active"></div>
-          <div class="para active"></div>
-          <div class="para active"></div>
-          <div class="para"></div>
-        </div>
-        <div class="level-label">– Fortgeschritten</div>
-      </div>
-      <img src="assets/images/css.png" alt="CSS">
-    </div>
-
-    <!-- TypeScript -->
-    <div class="sprache-box">
-      <span>TypeScript</span>
-      <div class="level-toggle">
-        <div class="level-bars">
-          <div class="para active"></div>
-          <div class="para active"></div>
-          <div class="para active"></div>
-          <div class="para active"></div>
-          <div class="para"></div>
-        </div>
-        <div class="level-label">– Fortgeschritten</div>
-      </div>
-      <img src="assets/images/typescript.png" alt="TypeScript">
-    </div>
-
-    <!-- Python -->
-    <div class="sprache-box">
-      <span>Python</span>
-      <div class="level-toggle">
-        <div class="level-bars">
-          <div class="para active"></div>
-          <div class="para active"></div>
-          <div class="para active"></div>
-          <div class="para"></div>
-          <div class="para"></div>
-        </div>
-        <div class="level-label">– Gute Kenntnisse</div>
-      </div>
-      <img src="assets/images/python.png" alt="Python">
-    </div>
-
+    <img src="assets/images/profilbild.png" alt="Profilbild" class="profilbild">
   </div>
-</div>
+  </section>
 
-    <!-- Unter Spalte 2 & 3: Mein Werdegang -->
-<div class="ueber-mich-container grid-werdegang">
-  <div class="button-group">
-    <button class="werdegang-btn active" data-type="schule">Schulbildung</button>
-    <button class="werdegang-btn" data-type="beruf">Beruflicher Werdegang</button>
-  </div>
-    <hr class="werdegang-separator" />
+  <section id="ueber-mich">
+    <div class="ueber-mich-grid-layout">
+      <div class="ueber-mich-container grid-info">
+        <h2>Informationen über mich</h2>
+        <p>Hey, ich bin Hristian Petrov, 21 Jahre alt und lebe in Bern-Bümpliz.</p>
+        <p>Schon früh habe ich gemerkt, dass mich die digitale Welt fasziniert. Nach der Schule habe ich eine KV-Ausbildung im E-Profil an der WKS Bern gemacht und danach die Berufsmaturität abgeschlossen.</p>
+        <p>Heute studiere ich Wirtschaftsinformatik an der Berner Fachhochschule. Besonders interessieren mich Webdesign und Programmierung.</p>
+        <p>Neben dem Studium bin ich Teilinhaber der Auto Schmitten GmbH und kann dort praktische Erfahrungen sammeln.</p>
+        <a href="assets/documents/lebenslauf.pdf" class="lebenslauf-btn" download>
+          <span>CV herunterladen</span>
+          <img src="assets/images/download.png" alt="Download Icon">
+        </a>
+      </div>
+      
+      <div class="ueber-mich-container grid-sprache">
+        <h2>Meine Sprachkenntnisse</h2>
+        <div class="sprache-box">
+          <span>Deutsch</span>
+          <div class="level-toggle">
+            <div class="level-bars">
+                <div class="para active"></div>
+                <div class="para active"></div>
+                <div class="para active"></div>
+                <div class="para active"></div>
+                <div class="para active"></div>
+              </div>
+              <div class="level-label">– Muttersprache</div>
+            </div>
+            <img src="assets/images/germany.png" alt="Deutsch" />
+          </div>
 
-  <div class="tab-content werdegang-abschnitt active" id="education" data-type="schule">
-    <div class="timeline">
-      <div class="timeline-item">
-        <span class="date">Sep 2023 – Aktuell</span>
-        <h4>BACHELOR OF SCIENCE IN WIRTSCHAFT</h4>
-        <span class="institution">Berner Fachhochschule BFH</span>
-        <p>Studium mit Fokus auf Digitalisierung, Projektmanagement und nachhaltige Informationssysteme. Verbindung von IT-Kompetenz mit betriebswirtschaftlichem Denken. Laufende Vertiefung in Webentwicklung, Datenanalyse und Business Process Management.</p>
-      </div>
-      <div class="timeline-item">
-        <span class="date">Aug 2022 – Jul 2023</span>
-        <h4>BERUFSMATURITÄT WIRTSCHAFT</h4>
-        <span class="institution">Wirtschafts- und Kaderschule WKS Bern</span>
-        <p>Vertiefung in wirtschaftlichen Fächern sowie Erweiterung der Allgemeinbildung im Rahmen der Berufsmaturität. Vorbereitung auf ein weiterführendes Studium im Bereich Wirtschaft und Informatik.</p>
-      </div>
-      <div class="timeline-item">
-        <span class="date">Aug 2019 – Jul 2022</span>
-        <h4>KAUFMANN EFZ (E-PROFIL)</h4>
-        <span class="institution">Wirtschafts- und Kaderschule WKS Bern</span>
-        <p>Dreijährige kaufmännische Grundbildung im E-Profil mit fundierten Kenntnissen in Wirtschaft, Administration und Kommunikation.</p>
-      </div>
-    </div>
-  </div>
+          <div class="sprache-box">
+            <span>Mazedonisch</span>
+            <div class="level-toggle">
+              <div class="level-bars">
+                <div class="para active"></div>
+                <div class="para active"></div>
+                <div class="para active"></div>
+                <div class="para active"></div>
+                <div class="para"></div>
+              </div>
+              <div class="level-label">– Muttersprache</div>
+            </div>
+            <img src="assets/images/macedonia.png" alt="Mazedonisch" />
+          </div>
 
-  <!-- Experience Start -->
-  <div class="tab-content werdegang-abschnitt" id="experience" data-type="beruf" style="display: none;">
-    <div class="timeline">
-      <div class="timeline-item">
-        <span class="date">Jan 2025 –  Aktuell</span>
-        <h4>Teilinhaber</h4>
-        <span class="institution">Auto Schmitten GmbH</span>
-        <p>Praktische kaufmännische Ausbildung mit Aufgaben in Administration, Rechnungswesen und Kommunikation. Direkter Kundenkontakt und Organisation kirchlicher Veranstaltungen.</p>
-      </div>
-      <div class="timeline-item">
-        <span class="date">Aug 2019 – Jul 2022</span>
-        <h4>Kaufmann EFZ</h4>
-        <span class="institution">Reformierte Kirchen Bern-Jura-Solothurn</span>
-        <p>Praktische kaufmännische Ausbildung mit Aufgaben in Administration, Rechnungswesen und Kommunikation. Direkter Kundenkontakt und Organisation kirchlicher Veranstaltungen.</p>
-      </div>
-    </div>
-  </div>
+          <div class="sprache-box">
+            <span>Französisch</span>
+            <div class="level-toggle">
+              <div class="level-bars">
+                <div class="para active"></div>
+                <div class="para active"></div>
+                <div class="para active"></div>
+                <div class="para"></div>
+                <div class="para"></div>
+              </div>
+              <div class="level-label">– Fortgeschritten</div>
+            </div>
+            <img src="assets/images/france.png" alt="Französisch" />
+          </div>
 
-  <!-- Experience Start -->
-  <div class="tab-content" id="experience" data-type="beruf" style="display: none;">
-    <div class="timeline">
-      <div class="timeline-item">
-        <span class="date">Aug 2019 – Jul 2022</span>
-        <h4>KAUFMANN EFZ<span>Reformierte Kirchen Bern-Jura-Solothurn</span></h4>
-        <p>Praktische kaufmännische Ausbildung mit Aufgaben in Administration, Rechnungswesen und Kommunikation. Direkter Kundenkontakt und Organisation kirchlicher Veranstaltungen.</p>
+          <div class="sprache-box">
+            <span>Englisch</span>
+            <div class="level-toggle">
+              <div class="level-bars">
+                <div class="para active"></div>
+                <div class="para active"></div>
+                <div class="para active"></div>
+                <div class="para active"></div>
+                <div class="para"></div>
+              </div>
+              <div class="level-label">– Fortgeschritten</div>
+            </div>
+            <img src="assets/images/england.png" alt="Englisch" />
+          </div>
+        </div>
+
+
+        <div class="ueber-mich-container grid-it">
+          <h2>Meine IT-Kenntnisse</h2>
+          <div class="sprachen-grid">
+
+            <div class="sprache-box">
+              <span>HTML5</span>
+              <div class="level-toggle">
+                <div class="level-bars">
+                  <div class="para active"></div>
+                  <div class="para active"></div>
+                  <div class="para active"></div>
+                  <div class="para active"></div>
+                  <div class="para"></div>
+                </div>
+                <div class="level-label">– Fortgeschritten</div>
+              </div>
+              <img src="assets/images/html.png" alt="HTML5">
+            </div>
+
+            <div class="sprache-box">
+              <span>JavaScript</span>
+              <div class="level-toggle">
+                <div class="level-bars">
+                  <div class="para active"></div>
+                  <div class="para active"></div>
+                  <div class="para"></div>
+                  <div class="para"></div>
+                  <div class="para"></div>
+                </div>
+                <div class="level-label">– Grundkenntnisse</div>
+              </div>
+              <img src="assets/images/javascript.png" alt="JavaScript">
+            </div>
+
+            <div class="sprache-box">
+              <span>CSS</span>
+              <div class="level-toggle">
+                <div class="level-bars">
+                  <div class="para active"></div>
+                  <div class="para active"></div>
+                  <div class="para active"></div>
+                  <div class="para active"></div>
+                  <div class="para"></div>
+                </div>
+                <div class="level-label">– Fortgeschritten</div>
+              </div>
+              <img src="assets/images/css.png" alt="CSS">
+            </div>
+
+            <div class="sprache-box">
+              <span>TypeScript</span>
+              <div class="level-toggle">
+                <div class="level-bars">
+                  <div class="para active"></div>
+                  <div class="para active"></div>
+                  <div class="para active"></div>
+                  <div class="para active"></div>
+                  <div class="para"></div>
+                </div>
+                <div class="level-label">– Fortgeschritten</div>
+              </div>
+              <img src="assets/images/typescript.png" alt="TypeScript">
+            </div>
+
+            <div class="sprache-box">
+              <span>Python</span>
+              <div class="level-toggle">
+                <div class="level-bars">
+                  <div class="para active"></div>
+                  <div class="para active"></div>
+                  <div class="para active"></div>
+                  <div class="para"></div>
+                  <div class="para"></div>
+                </div>
+                <div class="level-label">– Gute Kenntnisse</div>
+              </div>
+              <img src="assets/images/python.png" alt="Python">
+            </div>
+          </div>
+        </div>
+
+        <div class="ueber-mich-container grid-werdegang">
+          <div class="button-group">
+            <button class="werdegang-btn active" data-type="schule">Schulbildung</button>
+            <button class="werdegang-btn" data-type="beruf">Beruflicher Werdegang</button>
+          </div>
+          <hr class="werdegang-separator" />
+
+          <div class="tab-content werdegang-abschnitt active" id="education" data-type="schule">
+            <div class="timeline">
+              <div class="timeline-item">
+                <span class="date">Sep 2023 – Heute</span>
+                <h4>Bachelor of Science in Wirtschaftsinformatik</h4>
+                <span class="institution">Berner Fachhochschule BFH</span>
+                <p>Laufendes Studium im Bachelorstudiengang Wirtschaftsinformatik an der Berner Fachhochschule mit Fokus auf betriebswirtschaftliche Grundlagen, IT sowie deren Anwendung in praxisnahen Projekten.</p>
+              </div>
+
+              <div class="timeline-item">
+                <span class="date">Aug 2022 – Jul 2023</span>
+                <h4>Berufsmaturität Typ Wirtschaft</h4>
+                <span class="institution">Wirtschafts- und Kaderschule WKS Bern</span>
+                <p>Absolvierung der Berufsmaturität und Erlangen des eidgenössischen Berufsmaturitätszeugnisses in der Ausrichtung Wirtschaft und Dienstleistungen mit erweitertem Allgemeinbildungsanteil. Die Ausbildung ermöglichte eine gezielte Vorbereitung auf ein weiterführendes Studium an einer Fachhochschule.</p>
+              </div>
+
+              <div class="timeline-item">
+                <span class="date">Aug 2019 – Jul 2022</span>
+                <h4>Kaufmann EFZ (E-Profil)</h4>
+                <span class="institution">Wirtschafts- und Kaderschule WKS Bern</span>
+                <p>Absolvierung der dreijährigen beruflichen Grundbildung zum Kaufmann EFZ im E-Profil an der Wirtschafts- und Kaderschule WKS Bern. Vermittlung fundierter Kenntnisse in den Bereichen Administration, Kommunikation und Rechnungswesen.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-content werdegang-abschnitt" id="experience" data-type="beruf" style="display: none;">
+            <div class="timeline">
+              <div class="timeline-item">
+                <span class="date">Jan 2025 –  Aktuell</span>
+                <h4>Teilinhaber</h4>
+                <span class="institution">Auto Schmitten GmbH</span>
+                <p>Teilhaberschaft und aktive Mitwirkung im operativen Geschäft der Auto Schmitten GmbH mit Schwerpunkt auf kaufmännischen Aufgaben, Kundenkommunikation und interner Organisation. Unterstützung bei der Koordination von Material sowie Arbeiten an der IT-Infrastruktur zur Optimierung interner Prozesse.</p>
+              </div>
+
+            <div class="timeline-item">
+              <span class="date">Aug 2019 – Jul 2022</span>
+              <h4>Berufslehre Kaufmann EFZ</h4>
+              <span class="institution">Reformierte Kirchen Bern-Jura-Solothurn</span>
+              <p>Dreijährige Grundbildung als Kaufmann EFZ mit Einblick in viele verschiedene Bereiche. Ich arbeitete unter anderem im Back Office, am Empfang und im Finanzdienst. Dabei war ich zuständig für das Bearbeiten von Dokumenten, das Erstellen und Pflegen von Excel-Tabellen sowie für den Kontakt mit internen Anfragen per E-Mail und Telefon. Zusätzlich unterstützte ich bei buchhalterischen Aufgaben und half bei internen Anlässen mit. Diese breite Erfahrung hat mir einen guten Überblick über die administrativen Abläufe vermittelt und meine organisatorischen und kommunikativen Fähigkeiten gestärkt.</p>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
   </div>
 </section>
 
@@ -333,9 +318,7 @@
   <div class="portfolio-grid">
     <a class="portfolio-item" href="assets/documents/elva.pdf" target="_blank">
       <div class="hover-overlay">
-        <span class="project-title">Prozessoptimierung:<br>Elva Bau GmbH</span>
-        <div class="project-line"></div>
-        <img src="assets/images/download-pdf.png" alt="PDF Icon" class="project-icon">
+        <button class="hover-button">PDF öffnen</button>
       </div>
       <img src="assets/images/elva.png" alt="Elva Bau Projekt" class="elva-img">
     </a>
@@ -378,9 +361,9 @@
   </div>
 </section>
 
-    <section id="zukunft" hidden></section>
-    <section id="kontakt" hidden></section>
-  </main>
+<section id="zukunft" hidden></section>
+<section id="kontakt" hidden></section>
+</main>
 
   <script src="assets/scripts/main.js" defer></script>
 </body>

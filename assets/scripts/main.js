@@ -1,18 +1,20 @@
-const links = document.querySelectorAll('.nav-link');
 const sections = document.querySelectorAll('main section');
-const menuToggle = document.getElementById('menu-toggle');
-const navContainer = document.getElementById('nav-container');
-const themeToggle = document.getElementById('theme-toggle');
-const themeIcon = document.getElementById('theme-icon');
+const menuToggle = document.querySelector('.menu-toggle');
+const navContainer = document.querySelector('.nav-container');
+const links = document.querySelectorAll('.nav-link');
+const themeToggle = document.querySelector('.theme-toggle');
+const themeIcon = document.querySelector('.theme-icon');
+const werdegangButtons = document.querySelectorAll('.werdegang-btn');
+const werdegangAbschnitte = document.querySelectorAll('.werdegang-abschnitt');
 
-// =============================
-// Menü öffnen/schliessen + Seite verschieben
-// =============================
+/* =============================
+  Menu öffnen/schliessen
+============================= */
 menuToggle.addEventListener('click', (e) => {
   e.stopPropagation();
-  const menuIsHidden = navContainer.classList.toggle('hidden');
-  menuToggle.setAttribute('aria-expanded', !menuIsHidden);
-  document.body.classList.toggle('menu-open', !menuIsHidden);
+  const hidden = navContainer.classList.toggle('hidden');
+  menuToggle.setAttribute('aria-expanded', !hidden);
+  document.body.classList.toggle('menu-open', !hidden);
 });
 
 document.addEventListener('click', (e) => {
@@ -31,9 +33,9 @@ links.forEach(link => {
   });
 });
 
-// =============================
-// Hashbasierte Navigation mit Icon-Wechsel
-// =============================
+/* ============================
+  Seitenwechsel + Menu-Änderung
+============================ */
 function showSectionByHash() {
   const id = window.location.hash.substring(1) || 'home';
   const validIds = Array.from(sections).map(sec => sec.id);
@@ -54,17 +56,21 @@ function showSectionByHash() {
     }
   });
 
-  if (!window.location.hash) {
-    window.location.hash = '#home';
-  }
+  localStorage.setItem('lastTab', `#${targetId}`);
 }
 
 window.addEventListener('DOMContentLoaded', showSectionByHash);
 window.addEventListener('hashchange', showSectionByHash);
 
-// =============================
-// DARK/LIGHT MODE mit System-Check + Speicherung
-// =============================
+/* =============================
+  Letzte Seite öffnen (Neuladen)
+============================= */
+const savedHash = localStorage.getItem('lastTab') || '#home';
+if (!location.hash) location.hash = savedHash;
+
+/* ==============================
+  Hell-/Dunkelmodus + Speicherung
+============================== */
 function setTheme(mode) {
   document.documentElement.setAttribute('data-theme', mode);
   themeIcon.src = mode === 'dark'
@@ -73,45 +79,24 @@ function setTheme(mode) {
   localStorage.setItem('theme', mode);
 }
 
-const storedTheme = localStorage.getItem('theme');
-const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-
-if (storedTheme) {
-  setTheme(storedTheme);
-} else {
-  setTheme(prefersDark.matches ? 'dark' : 'light');
-}
-
-if (!storedTheme) {
-  prefersDark.addEventListener('change', (e) => {
-    setTheme(e.matches ? 'dark' : 'light');
-  });
-}
-
 themeToggle.addEventListener('click', () => {
   const current = document.documentElement.getAttribute('data-theme');
-  const newTheme = current === 'dark' ? 'light' : 'dark';
-  setTheme(newTheme);
+  setTheme(current === 'dark' ? 'light' : 'dark');
 });
 
-// =============================
-// Werdegang-Auswahl speichern & wiederherstellen
-// =============================
-const werdegangButtons = document.querySelectorAll('.werdegang-btn');
-const werdegangAbschnitte = document.querySelectorAll('.werdegang-abschnitt');
-
+/* ============================
+  Timeline-Knöpfe + Speicherung
+============================ */
 function setWerdegang(typ) {
   werdegangButtons.forEach(btn => {
-    const isActive = btn.dataset.type === typ;
-    btn.classList.toggle('active', isActive);
+    btn.classList.toggle('active', btn.dataset.type === typ);
   });
   localStorage.setItem('werdegang', typ);
 }
 
 function showWerdegangContent(typ) {
   werdegangAbschnitte.forEach(abschnitt => {
-    const isVisible = abschnitt.dataset.type === typ;
-    abschnitt.style.display = isVisible ? 'block' : 'none';
+    abschnitt.style.display = abschnitt.dataset.type === typ ? 'block' : 'none';
   });
 }
 
@@ -124,8 +109,12 @@ werdegangButtons.forEach(btn => {
 });
 
 window.addEventListener('DOMContentLoaded', () => {
-  showSectionByHash(); // falls nicht schon separat aufgerufen
   const gespeicherterTyp = localStorage.getItem('werdegang') || 'schule';
   setWerdegang(gespeicherterTyp);
   showWerdegangContent(gespeicherterTyp);
 });
+
+const stored = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = stored || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
