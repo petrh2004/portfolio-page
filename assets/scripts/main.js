@@ -219,7 +219,6 @@ function initContactForm() {
     icon.src = "";
     icon.style.display = "none";
 
-    // 1: Beim ersten Senden und leer → rot
     if (forceErrorIfEmpty && isEmpty) {
       el.classList.add("invalid");
       icon.src = "assets/images/false.png";
@@ -227,7 +226,6 @@ function initContactForm() {
       return false;
     }
 
-    // 2: E-Mail bleibt rot, bis korrekt
     if (email && !isValid && !isEmpty) {
       el.classList.add("invalid");
       icon.src = "assets/images/false.png";
@@ -235,7 +233,6 @@ function initContactForm() {
       return false;
     }
 
-    // 3: War grün, jetzt leer → rot
     if (wasValidBefore && isEmpty) {
       el.classList.add("invalid");
       icon.src = "assets/images/false.png";
@@ -244,13 +241,11 @@ function initContactForm() {
       return false;
     }
 
-    // 4: War grün, jetzt teilgelöscht → neutral
     if (wasValidBefore && !isValid && !isEmpty) {
       fieldStates.set(el, false);
       return false;
     }
 
-    // 5: korrekt → grün + Icon
     if (!forceErrorIfEmpty && isValid) {
       el.classList.add("valid");
       icon.src = "assets/images/right.png";
@@ -292,3 +287,32 @@ function initContactForm() {
     }
   });
 }
+
+/* ============================
+  Auto-Save vom Kontaktformular
+============================ */
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector(".kontakt-form");
+  if (!form) return;
+
+  const fields = form.querySelectorAll("input, textarea");
+  const storageKey = "kontakt-autosave";
+
+  const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+  fields.forEach(field => {
+    if (saved[field.name]) {
+      field.value = saved[field.name];
+    }
+  });
+
+  fields.forEach(field => {
+    field.addEventListener("input", () => {
+      const currentData = {};
+      fields.forEach(f => {
+        currentData[f.name] = f.value;
+      });
+      localStorage.setItem(storageKey, JSON.stringify(currentData));
+    });
+  });
+});
+
