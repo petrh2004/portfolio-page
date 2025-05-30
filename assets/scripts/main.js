@@ -118,3 +118,111 @@ const stored = localStorage.getItem('theme');
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const theme = stored || (prefersDark ? 'dark' : 'light');
       document.documentElement.setAttribute('data-theme', theme);
+
+/* ============================
+  Email.js
+============================ */
+function isValidEmail(val) {
+  return /\S+@\S+\.\S+/.test(val);
+}
+function hasMinLength(val, min) {
+  return val.trim().length >= min;
+}
+function showSuccess(msg) {
+  const div = document.querySelector(".success-message");
+  if (div) div.textContent = msg;
+}
+
+// Mail versenden mit EmailJS
+function sendMailWithEmailJS(fields) {
+  const serviceID = "service_i3j4cla";
+  const templateID = "petrh2";
+
+  const params = {
+    name: fields.name.value,
+    email: fields.email.value,
+    subject: fields.subject.value,
+    message: fields.message.value,
+  };
+
+  emailjs
+    .send(serviceID, templateID, params)
+    .then((res) => {
+      console.log("Email gesendet:", res.status, res.text);
+      showSuccess("Danke, deine Nachricht wurde versendet! 🎉");
+
+      const form = document.querySelector(".kontakt-form");
+      form.reset();
+      form.querySelectorAll(".error-message.valid").forEach((el) => {
+        el.textContent = "";
+        el.classList.remove("valid");
+      });
+    })
+    .catch((err) => {
+      console.error("Fehler beim Senden:", err);
+      showSuccess("Hoppla, da ist etwas schiefgelaufen.");
+    });
+}
+
+// Kontaktformular Validierung
+function initContactForm() {
+  const form = document.querySelector(".kontakt-form");
+  if (!form) return;
+  form.setAttribute("novalidate", "");
+
+  const fields = {
+    name: form.elements.name,
+    email: form.elements.email,
+    subject: form.elements.subject,
+    message: form.elements.message,
+  };
+  const rules = [
+    { el: fields.name, min: 2, msg: "Bitte min. 2 Zeichen." },
+    { el: fields.email, email: true, msg: "Ungültige E-Mail." },
+    { el: fields.subject, min: 5, msg: "Betreff min. 5 Zeichen." },
+    { el: fields.message, min: 15, msg: "Nachricht min. 15 Zeichen." },
+  ];
+
+  function validateField({ el, min, email, msg }) {
+    const span = el.nextElementSibling;
+    let ok = true;
+    if (email) ok = isValidEmail(el.value);
+    else if (min) ok = hasMinLength(el.value, min);
+
+    el.classList.remove("invalid");
+    span.classList.remove("valid");
+    span.textContent = "";
+
+    if (!ok) {
+      el.classList.add("invalid");
+      span.textContent = msg;
+    } else {
+      span.textContent = "✓";
+      span.classList.add("valid");
+    }
+    return ok;
+  }
+
+  rules.forEach((rule) => {
+    rule.el.addEventListener("input", () => validateField(rule));
+  });
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    let allValid = true;
+
+    rules.forEach((rule) => {
+      if (!validateField(rule)) allValid = false;
+    });
+
+    if (allValid) {
+      sendMailWithEmailJS(fields);
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  PageTransitions();
+  initCountdowns();
+  initContactForm();
+});

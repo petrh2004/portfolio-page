@@ -15,6 +15,16 @@
     })();
   </script>
 
+  <script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+  ></script>
+  <script type="text/javascript">
+    (function () {
+      emailjs.init({ publicKey: "PCWPVJXBljTzhGdMG" });
+    })();
+  </script>
+
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="icon" href="assets/images/favicon.png" type="image/png">
 </head>
@@ -111,23 +121,24 @@
   <section id="ueber-mich">
     <div class="ueber-mich-grid-layout">
       <div class="ueber-mich-container grid-info">
-        <h2>Informationen über mich</h2>
-        <p>Hey, ich bin Hristian Petrov, 21 Jahre alt und lebe in Bern-Bümpliz.</p>
-        <p>Schon früh habe ich gemerkt, dass mich die digitale Welt fasziniert. Nach der Schule habe ich eine KV-Ausbildung im E-Profil an der WKS Bern gemacht und danach die Berufsmaturität abgeschlossen.</p>
-        <p>Heute studiere ich Wirtschaftsinformatik an der Berner Fachhochschule. Besonders interessieren mich Webdesign und Programmierung.</p>
-        <p>Neben dem Studium bin ich Teilinhaber der Auto Schmitten GmbH und kann dort praktische Erfahrungen sammeln.</p>
+          <h2>Informationen über mich</h2>
+          <p>Hey, ich bin Hristian Petrov, 21 Jahre alt und lebe in Bern-Bümpliz.</p>
+          <p>Schon früh habe ich gemerkt, dass mich die digitale Welt fasziniert. Nach der Schule habe ich eine KV-Ausbildung im E-Profil an der WKS Bern gemacht und danach die Berufsmaturität abgeschlossen.</p>
+          <p>Heute studiere ich Wirtschaftsinformatik an der Berner Fachhochschule. Besonders interessieren mich Webdesign und Programmierung.</p>
+          <p>Neben dem Studium bin ich Teilinhaber der Auto Schmitten GmbH und kann dort praktische Erfahrungen sammeln.</p>
         <a href="assets/documents/lebenslauf.pdf" class="lebenslauf-btn" download>
           <span>CV herunterladen</span>
           <img src="assets/images/download.png" alt="Download Icon">
         </a>
       </div>
       
-      <div class="ueber-mich-container grid-sprache">
-        <h2>Meine Sprachkenntnisse</h2>
-        <div class="sprache-box">
-          <span>Deutsch</span>
-          <div class="level-toggle">
-            <div class="level-bars">
+      <div class="kenntnisse-wrapper"></div>
+        <div class="ueber-mich-container grid-sprache">
+          <h2>Meine Sprachkenntnisse</h2>
+          <div class="sprache-box">
+            <span>Deutsch</span>
+            <div class="level-toggle">
+              <div class="level-bars">
                 <div class="para active"></div>
                 <div class="para active"></div>
                 <div class="para active"></div>
@@ -376,6 +387,7 @@
 
 <section id="zukunft" hidden></section>
 
+
 <section id="kontakt" hidden>
   <div class="kontakt-wrapper">
     <div class="kontakt-content">
@@ -450,7 +462,7 @@
         <input type="email" placeholder="Deine E-Mail" required>
         <input type="text" placeholder="Betreff" required>
         <textarea rows="6" placeholder="Deine Nachricht..." required></textarea>
-        <button type="submit">Senden</button>
+        <button type="submit" tabindex="0">Senden</button>
       </form>
     </div>
   </div>
