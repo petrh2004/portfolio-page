@@ -77,18 +77,6 @@
         >
         <span class="nav-text">Mein Portfolio</span>
       </a></li>
-      <li><a href="#zukunft" class="nav-link" tabindex="0">
-        <img
-          src="assets/images/future.png"
-          class="nav-icon"
-          alt=""
-          role="presentation"
-          aria-hidden="true"
-          data-default="assets/images/future.png"
-          data-active="assets/images/future2.png"
-        >
-        <span class="nav-text">Meine Zukunft</span>
-      </a></li>
       <li><a href="#kontakt" class="nav-link" tabindex="0">
         <img
           src="assets/images/mail.png"
@@ -385,9 +373,6 @@
   </div>
 </section>
 
-<section id="zukunft" hidden></section>
-
-
 <section id="kontakt" hidden>
   <div class="kontakt-wrapper">
     <div class="kontakt-content">
@@ -457,12 +442,32 @@
 
       <div class="divider-line2"></div>
 
-      <form class="kontakt-form">
-        <input type="text" placeholder="Dein Name" required>
-        <input type="email" placeholder="Deine E-Mail" required>
-        <input type="text" placeholder="Betreff" required>
-        <textarea rows="6" placeholder="Deine Nachricht..." required></textarea>
+      <form class="kontakt-form" novalidate>
+        <div class="form-group">
+          <input type="text" name="name" placeholder="Dein Name" required>
+          <img class="icon-status" aria-hidden="true">
+        </div>
+
+        <div class="form-group">
+          <input type="email" name="email" placeholder="Deine E-Mail" required>
+          <img class="icon-status" aria-hidden="true">
+        </div>
+
+        <div class="form-group">
+          <input type="text" name="subject" placeholder="Betreff" required>
+          <img class="icon-status" aria-hidden="true">
+        </div>
+
+        <div class="form-group">
+          <textarea name="message" rows="6" placeholder="Deine Nachricht..." required></textarea>
+          <img class="icon-status" aria-hidden="true">
+        </div>
+
         <button type="submit" tabindex="0">Senden</button>
+
+        <div class="success-box" style="display: none;">
+          <span class="success-text">Danke! Deine Nachricht wurde erfolgreich übermittelt. Ich melde mich bald bei dir.</span>
+        </div>
       </form>
     </div>
   </div>

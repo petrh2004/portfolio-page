@@ -952,11 +952,11 @@ body.menu-open .para {
   flex-direction: column;
   width: 100%;
   max-width: 420px;
-  gap: 1.2rem;
 }
 
 .kontakt-form input,
 .kontakt-form textarea {
+  margin-bottom: 1rem;
   width: 100%;
   padding: 0.9rem 1rem;
   font-size: 1rem;
@@ -986,7 +986,7 @@ body.menu-open .para {
   z-index: 0;
   display: inline-block;
   width: 150px;
-  margin-top: 1.5rem;
+  margin-left: 9rem;
   padding: 0.85rem 2rem;
   font-size: 1.1rem;
   font-weight: 500;
@@ -1019,6 +1019,62 @@ body.menu-open .para {
 .kontakt-form button:hover {
   box-shadow: 0 0 15px var(--accent);
 }
+
+/* === Input-Validierung === */
+.form-group {
+  position: relative;
+  width: 100%;
+}
+
+.kontakt-form input.valid,
+.kontakt-form textarea.valid {
+  border-color: green;
+}
+
+.kontakt-form input.invalid,
+.kontakt-form textarea.invalid {
+  border-color: red;
+}
+
+input + .icon-status {
+  position: absolute;
+  right: -1.1rem;
+  top: 39%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  display: none;
+  pointer-events: none;
+  z-index: 1;}
+
+textarea + .icon-status {
+  position: fixed;
+  right: 4.75rem;
+  top: 40.75%;
+  transform: none;
+  width: 22px;
+  height: 22px;
+  display: none;
+  pointer-events: none;
+}
+
+.success-box {
+  margin-top: 1.5rem;
+  background-color: #d2f7df;
+  color: #146c43;
+  border: 2px solid #b5e7c7;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
 
 /* =========================
   Responsiv
@@ -1599,9 +1655,9 @@ body.menu-open .para {
     resize: none;    
     outline: none;
     padding: 0.9rem 1rem;
-    box-sizing: border-box;
-    border: 1px solid rgba(255, 255, 255, 0.2);    
+    box-sizing: border-box;  
     border-radius: 12px;
+    border-color: var(--foreground) ;     
     font-size: 1rem;    
     background: rgba(255, 255, 255, 0.06);
     width: 100%;
@@ -1612,13 +1668,15 @@ body.menu-open .para {
   }
 
   body.menu-open .kontakt-form button {
-    display: block;
-    margin: 1rem 0 0 0;
-    padding: 0.85rem 1.5rem;
-    width: 100%;
-    max-width: 320px;
-    font-size: 1rem;
-  }
+  display: block;
+  padding: 0.85rem 1.5rem;
+  margin: 1rem auto 0 auto;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 320px;
+  text-align: center;
+}
+
 }
 
 @media (max-width: 1042px) {
@@ -1771,8 +1829,8 @@ body.menu-open .para {
     padding: 0.9rem 1rem;
     width: 100%;
     max-width: 100%;
-    border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 12px;
+    border-color: var(--foreground);     
     font-size: 1rem;
     background: rgba(255, 255, 255, 0.06);
     backdrop-filter: blur(10px);
@@ -1780,12 +1838,13 @@ body.menu-open .para {
     transition: border 0.3s ease, box-shadow 0.3s ease;    
   }
 
-  .kontakt-form button {
-    display: block;
-    padding: 0.85rem 1.5rem;
-    margin: 1rem 0 0 0;
-    font-size: 1rem;
-    width: 100%;
-    max-width: 320px;    
-  }
+.kontakt-form button {
+  display: block;
+  padding: 0.85rem 1.5rem;
+  margin: 1rem auto 0 auto;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 320px;
+  text-align: center;
+}
 }

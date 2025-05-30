@@ -122,18 +122,30 @@ const stored = localStorage.getItem('theme');
 /* ============================
   Email.js
 ============================ */
+document.addEventListener("DOMContentLoaded", () => {
+  initContactForm();
+});
+
 function isValidEmail(val) {
-  return /\S+@\S+\.\S+/.test(val);
-}
-function hasMinLength(val, min) {
-  return val.trim().length >= min;
-}
-function showSuccess(msg) {
-  const div = document.querySelector(".success-message");
-  if (div) div.textContent = msg;
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
 }
 
-// Mail versenden mit EmailJS
+function showSuccessMessage(messageText) {
+  const box = document.querySelector(".success-box");
+  if (!box) return;
+
+  box.textContent = messageText;
+  box.style.display = "flex";
+  box.style.opacity = "1";
+
+  setTimeout(() => {
+    box.style.opacity = "0";
+    setTimeout(() => {
+      box.style.display = "none";
+    }, 300);
+  }, 5000);
+}
+
 function sendMailWithEmailJS(fields) {
   const serviceID = "service_i3j4cla";
   const templateID = "petrh2";
@@ -147,24 +159,32 @@ function sendMailWithEmailJS(fields) {
 
   emailjs
     .send(serviceID, templateID, params)
-    .then((res) => {
-      console.log("Email gesendet:", res.status, res.text);
-      showSuccess("Danke, deine Nachricht wurde versendet! 🎉");
-
+    .then(() => {
+      showSuccessMessage("Danke! Deine Nachricht wurde erfolgreich übermittelt. Wir melden uns so bald wie möglich bei dir zurück. ✅ ");
       const form = document.querySelector(".kontakt-form");
       form.reset();
-      form.querySelectorAll(".error-message.valid").forEach((el) => {
-        el.textContent = "";
-        el.classList.remove("valid");
-      });
+      resetAllStyles(form);
+      hasSubmitted = false;
     })
-    .catch((err) => {
-      console.error("Fehler beim Senden:", err);
-      showSuccess("Hoppla, da ist etwas schiefgelaufen.");
+    .catch(() => {
+      showSuccessMessage("Fehler beim Senden der Nachricht. ❌ ");
     });
 }
 
-// Kontaktformular Validierung
+function resetAllStyles(form) {
+  form.querySelectorAll("input, textarea").forEach((el) => {
+    el.classList.remove("valid", "invalid");
+  });
+  form.querySelectorAll(".icon-status").forEach((icon) => {
+    icon.src = "";
+    icon.style.display = "none";
+  });
+  fieldStates.clear();
+}
+
+let hasSubmitted = false;
+const fieldStates = new Map();
+
 function initContactForm() {
   const form = document.querySelector(".kontakt-form");
   if (!form) return;
@@ -176,53 +196,99 @@ function initContactForm() {
     subject: form.elements.subject,
     message: form.elements.message,
   };
+
   const rules = [
-    { el: fields.name, min: 2, msg: "Bitte min. 2 Zeichen." },
-    { el: fields.email, email: true, msg: "Ungültige E-Mail." },
-    { el: fields.subject, min: 5, msg: "Betreff min. 5 Zeichen." },
-    { el: fields.message, min: 15, msg: "Nachricht min. 15 Zeichen." },
+    { el: fields.name, min: 1 },
+    { el: fields.email, email: true },
+    { el: fields.subject, min: 1 },
+    { el: fields.message, min: 1 },
   ];
 
-  function validateField({ el, min, email, msg }) {
-    const span = el.nextElementSibling;
-    let ok = true;
-    if (email) ok = isValidEmail(el.value);
-    else if (min) ok = hasMinLength(el.value, min);
+  function validateField({ el, min, email }, forceErrorIfEmpty = false) {
+    const icon = el.nextElementSibling;
+    const value = el.value.trim();
+    const isEmpty = value === "";
+    const wasInvalid = el.classList.contains("invalid");
+    const wasValidBefore = fieldStates.get(el) === true;
 
-    el.classList.remove("invalid");
-    span.classList.remove("valid");
-    span.textContent = "";
+    let isValid = true;
+    if (email) isValid = isValidEmail(value);
+    else if (min) isValid = value.length >= min;
 
-    if (!ok) {
+    el.classList.remove("valid", "invalid");
+    icon.src = "";
+    icon.style.display = "none";
+
+    // 1: Beim ersten Senden und leer → rot
+    if (forceErrorIfEmpty && isEmpty) {
       el.classList.add("invalid");
-      span.textContent = msg;
-    } else {
-      span.textContent = "✓";
-      span.classList.add("valid");
+      icon.src = "assets/images/false.png";
+      icon.style.display = "block";
+      return false;
     }
-    return ok;
+
+    // 2: E-Mail bleibt rot, bis korrekt
+    if (email && !isValid && !isEmpty) {
+      el.classList.add("invalid");
+      icon.src = "assets/images/false.png";
+      icon.style.display = "block";
+      return false;
+    }
+
+    // 3: War grün, jetzt leer → rot
+    if (wasValidBefore && isEmpty) {
+      el.classList.add("invalid");
+      icon.src = "assets/images/false.png";
+      icon.style.display = "block";
+      fieldStates.set(el, false);
+      return false;
+    }
+
+    // 4: War grün, jetzt teilgelöscht → neutral
+    if (wasValidBefore && !isValid && !isEmpty) {
+      fieldStates.set(el, false);
+      return false;
+    }
+
+    // 5: korrekt → grün + Icon
+    if (!forceErrorIfEmpty && isValid) {
+      el.classList.add("valid");
+      icon.src = "assets/images/right.png";
+      icon.style.display = "block";
+      fieldStates.set(el, true);
+
+      const delay = wasInvalid ? 2000 : 1000;
+      setTimeout(() => {
+        el.classList.remove("valid");
+        icon.src = "";
+        icon.style.display = "none";
+      }, delay);
+    }
+
+    return isValid;
   }
 
   rules.forEach((rule) => {
-    rule.el.addEventListener("input", () => validateField(rule));
+    rule.el.addEventListener("input", () => {
+      if (hasSubmitted) validateField(rule);
+    });
   });
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    let allValid = true;
+    hasSubmitted = true;
 
-    rules.forEach((rule) => {
-      if (!validateField(rule)) allValid = false;
-    });
+    let allValid = true;
+    for (const rule of rules) {
+      const valid = validateField(rule, true);
+      if (!valid && allValid) {
+        rule.el.focus();
+        allValid = false;
+      }
+    }
 
     if (allValid) {
       sendMailWithEmailJS(fields);
     }
   });
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  PageTransitions();
-  initCountdowns();
-  initContactForm();
-});
