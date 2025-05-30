@@ -17,7 +17,6 @@
 
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="icon" href="assets/images/favicon.png" type="image/png">
-  <script src="assets/js/main.js" defer></script>
 </head>
 <body>
 
@@ -29,14 +28,16 @@
   <img src="assets/images/moon.png" alt="Theme Icon" class="theme-icon nav-icon">
 </button>
 
-<div class="nav-container hidden">
+<div class="nav-container hidden" id="nav-container" role="navigation" aria-label="Hauptnavigation">
   <nav>
     <ul>
       <li><a href="#home" class="nav-link" tabindex="0">
         <img
           src="assets/images/home.png"
           class="nav-icon"
-          alt="Home"
+          alt=""
+          role="presentation"
+          aria-hidden="true"
           data-default="assets/images/home.png"
           data-active="assets/images/home2.png"
         >
@@ -46,7 +47,9 @@
         <img
           src="assets/images/person.png"
           class="nav-icon"
-          alt="Über mich"
+          alt=""
+          role="presentation"
+          aria-hidden="true"
           data-default="assets/images/person.png"
           data-active="assets/images/person2.png"
         >
@@ -56,7 +59,9 @@
         <img
           src="assets/images/project.png"
           class="nav-icon"
-          alt="Portfolio"
+          alt=""
+          role="presentation"
+          aria-hidden="true"
           data-default="assets/images/project.png"
           data-active="assets/images/project2.png"
         >
@@ -66,7 +71,9 @@
         <img
           src="assets/images/future.png"
           class="nav-icon"
-          alt="Zukunft"
+          alt=""
+          role="presentation"
+          aria-hidden="true"
           data-default="assets/images/future.png"
           data-active="assets/images/future2.png"
         >
@@ -76,7 +83,9 @@
         <img
           src="assets/images/mail.png"
           class="nav-icon"
-          alt="Kontakt"
+          alt=""
+          role="presentation"
+          aria-hidden="true"
           data-default="assets/images/mail.png"
           data-active="assets/images/mail2.png"
         >
@@ -312,13 +321,17 @@
 </section>
 
 <section id="portfolio" hidden>
-  <h2 style="text-align: center;">Mein Portfolio</h2>
-  <p style="text-align: center;">Im Folgenden präsentiere ich eine Auswahl von Projekten, an denen ich während meines Studiums mitgewirkt habe.</p>
+  <div class="portfolio-header">
+    <h2 class="portfolio-titel">Mein Portfolio</h2>
+    <p class="portfolio-text">Im Folgenden präsentiere ich eine Auswahl von Projekten, an denen ich während meines Studiums mitgewirkt habe.</p>
+  </div>
 
   <div class="portfolio-grid">
     <a class="portfolio-item" href="assets/documents/elva.pdf" target="_blank">
       <div class="hover-overlay">
-        <button class="hover-button">PDF öffnen</button>
+        <span class="project-title">Prozessoptmierung: Elva Bau GmbH</span>
+        <div class="project-line"></div>
+        <img src="assets/images/download-pdf.png" alt="Link Icon" class="project-icon">
       </div>
       <img src="assets/images/elva.png" alt="Elva Bau Projekt" class="elva-img">
     </a>
@@ -362,9 +375,87 @@
 </section>
 
 <section id="zukunft" hidden></section>
-<section id="kontakt" hidden></section>
-</main>
 
-  <script src="assets/scripts/main.js" defer></script>
+<section id="kontakt" hidden>
+  <div class="kontakt-wrapper">
+    <div class="kontakt-content">
+      <div class="kontakt-left-column">
+        <div class="kontakt-info-column">
+          <h2 class="kontakt-titel">Kontaktiere mich</h2>
+          <p class="kontakt-text">Möchten Sie mir eine Frage stellen, ein Anliegen mitteilen oder einfach Kontakt aufnehmen? Dann freue ich mich über Ihre Nachricht. Ich werde mich so schnell wie möglich bei Ihnen melden.</p>
+
+          <div class="kontakt-label">
+            <div class="icon-box">
+              <img src="assets/images/location.png" alt="Standort Icon" class="icon">
+            </div>
+            <strong>Standort:</strong> 
+            <a href="https://www.google.com/maps/place/Bern,+Schweiz" class="kontakt-link" target="_blank">Bern, Schweiz</a>
+          </div>
+
+          <div class="kontakt-label">
+            <div class="icon-box">
+              <img src="assets/images/mail.png" alt="E-Mail Icon" class="icon">
+            </div>
+            <strong>E-Mail:</strong> 
+            <a href="mailto:hristian.petrov@icloud.com" class="kontakt-link">hristian.petrov@icloud.com</a>
+          </div>
+
+          <div class="kontakt-label">
+            <div class="icon-box">
+              <img src="assets/images/phone.png" alt="Telefon Icon" class="icon">
+            </div>
+            <strong>Telefon:</strong> 
+            <a href="tel:+41765940104" class="kontakt-link">+41 76 594 01 04</a>
+         </div>
+
+          <div class="kontakt-buttons">
+            <a href="https://instagram.com/h.petrov04" class="kontakt-btn-outline" target="_blank">
+              <img src="assets/images/instagram.png" alt="Instagram" class="icon">
+            </a>
+            <a href="https://wa.me/41765940104" class="kontakt-btn-outline" target="_blank">
+              <img src="assets/images/whatsapp.png" alt="WhatsApp" class="icon">
+            </a>
+            <a href="https://github.com/petrh2004" class="kontakt-btn-outline" target="_blank">
+              <img src="assets/images/github.png" alt="GitHub" class="icon">
+            </a>
+          </div>
+        </div>
+
+        <div class="divider-line"></div>
+
+        <div class="firma-box">
+          <p class="firma-text">
+            Auto Schmitten GmbH<br>
+            Unterdorfstrasse 46<br>
+            3185 Schmitten<br>
+            <a href="tel:+41795656500" class="kontakt-link">+41 79 565 65 00</a> |
+            <a href="mailto:info@autoschmitten.ch" class="kontakt-link">info@autoschmitten.ch</a> |
+            <a href="https://www.autoschmitten.ch" class="kontakt-link" target="_blank">www.autoschmitten.ch</a>
+          </p>
+          <div class="firma-links">
+            <a href="https://www.facebook.com/autoschmitten" target="_blank">
+              <img src="assets/images/facebook.png" alt="Facebook" class="firma-bild">
+            </a>
+            <a href="https://www.autoscout24.ch/de/s/seller-1444736" target="_blank">
+              <img src="assets/images/autoscout.png" alt="AutoScout24" class="firma-bild">
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider-line2"></div>
+
+      <form class="kontakt-form">
+        <input type="text" placeholder="Dein Name" required>
+        <input type="email" placeholder="Deine E-Mail" required>
+        <input type="text" placeholder="Betreff" required>
+        <textarea rows="6" placeholder="Deine Nachricht..." required></textarea>
+        <button type="submit">Senden</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script src="assets/scripts/main.js" defer></script>
 </body>
 </html>
